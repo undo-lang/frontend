@@ -6,7 +6,11 @@ token TOP { <lines> }
 token block { '{' ~ '}' <lines> }
 
 token lines { "\n"* <line> * %% "\n" "\n"* }
-token line { <.ws> <expr> }
+regex line { <.ws> <outer_expr> }
+
+proto regex outer_expr { * }
+regex outer_expr:sym<post_if> { <expr> 'if' <expr> }
+regex outer_expr:sym<expr> { <expr> }
 
 proto token expr { * }
 token expr:sym<id> { <id> }

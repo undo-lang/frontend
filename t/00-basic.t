@@ -15,8 +15,8 @@ plan 1;
 
 say Undo::Grammar.parse(q:to/code/);
   if bar(3, b) {
-    x()
-    bat(5)
+    y() if b
+    z()
   }
 code
 
