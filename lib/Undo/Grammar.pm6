@@ -5,13 +5,14 @@ token id { <[a..z A..Z -]> + }
 token TOP { <lines> }
 token block { '{' ~ '}' <lines> }
 
-token lines { <line> * %% "\n" }
-token line { <expr> }
+token lines { "\n"* <line> * %% "\n" "\n"* }
+token line { <.ws> <expr> }
 
 proto token expr { * }
+token expr:sym<id> { <id> }
 token expr:sym<call> { <call> }
 token expr:sym<literal> { <literal> }
-token expr:sym<if> { 'if' <expr> <block> }
+rule expr:sym<if> { 'if' <expr> '{' <lines> '}' }
 
 token call { <id> '(' <exprlist> ')' }
 
