@@ -15,8 +15,8 @@ token expr:sym<if> { 'if' <expr> <block> }
 
 token call { <id> '(' <exprlist> ')' }
 
-regex exprlist { <expr> + %% ',' }
+rule exprlist { <expr> * %% ',' }
 
 # literal stuff
 proto token literal { * }
-token literal:sym<num> { '-' <[0..9]> + }
+token literal:sym<num> { '-'? <[0..9]> + }

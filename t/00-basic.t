@@ -7,7 +7,9 @@ plan 1;
 
 #say Undo::Frontend.new.perl;
 
-say Undo::Grammar.parse("foo(1, bar(2));");
+say Undo::Grammar.parse("foo(3, bar(4, 5))");
+
+say Undo::Grammar.parse("3", :rule<literal>);
 
 
 is '', '';
