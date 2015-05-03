@@ -26,8 +26,12 @@ plan 1;
 #   }
 # code
 
+# say Undo::Grammar.parse(q:to/code/);
+#   hello(1, "hello")
+# code
+
 say Undo::Grammar.parse(q:to/code/);
-  hello(1, "hello")
+  print([1, 2, 3])
 code
 
 is '', '';

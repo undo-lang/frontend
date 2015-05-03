@@ -23,3 +23,4 @@ rule exprlist { <expr> * %% ',' }
 proto token literal { * }
 token literal:sym<num> { '-'? <[0..9]> + }
 token literal:sym<str> { '"' ~ '"' <[a..z A..Z -]> + }
+token literal:sym<seq> { '[' <exprlist> ']' }
