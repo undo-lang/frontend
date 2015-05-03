@@ -20,10 +20,14 @@ plan 1;
 #   }
 # code
 
+# say Undo::Grammar.parse(q:to/code/);
+#   for foo {
+#     bar(buz)
+#   }
+# code
+
 say Undo::Grammar.parse(q:to/code/);
-  for foo {
-    bar(buz)
-  }
+  hello(1, "hello")
 code
 
 is '', '';
