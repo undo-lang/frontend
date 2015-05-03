@@ -13,6 +13,7 @@ token expr:sym<id> { <id> }
 token expr:sym<call> { <call> }
 token expr:sym<literal> { <literal> }
 rule expr:sym<if> { 'if' <expr> '{' <lines> '}' }
+rule expr:sym<for> { 'for' <expr> '{' <lines> '}' }
 
 token call { <id> '(' <exprlist> ')' }
 

@@ -13,10 +13,16 @@ plan 1;
 #  bat(5)
 #code
 
+# say Undo::Grammar.parse(q:to/code/);
+#   if bar(3, b) {
+#     x()
+#     bat(5)
+#   }
+# code
+
 say Undo::Grammar.parse(q:to/code/);
-  if bar(3, b) {
-    x()
-    bat(5)
+  for foo {
+    bar(buz)
   }
 code
 
