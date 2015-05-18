@@ -1,6 +1,5 @@
-use Test;
 use lib 'lib/';
-#use Undo::Frontend;
+use Test;
 use Undo::Grammar;
 
 plan 1;
@@ -31,7 +30,7 @@ plan 1;
 # code
 
 say Undo::Grammar.parse(q:to/code/);
-  print([1, 2, 3])
+  print(1 + 2)
 code
 
 is '', '';

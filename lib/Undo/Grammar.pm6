@@ -6,14 +6,24 @@ token TOP { <lines> }
 token block { '{' ~ '}' <lines> }
 
 token lines { "\n"* <line> * %% "\n" "\n"* }
-token line { <.ws> <expr> }
+token line { <.ws> [ <expr> || <stmt> ] }
+
+proto token stmt { * }
+rule expr:var-decl {
+  'var' <id> + %% 
+}
 
 proto token expr { * }
-token expr:sym<var> { <id> }
-token expr:sym<call> { <call> }
-token expr:sym<literal> { <literal> }
-rule expr:sym<if> { 'if' <expr> <block> }
-rule expr:sym<loop> { 'loop' <expr> <block> }
+token expr:var { <id> }
+token expr:call { <call> }
+token expr:literal { <literal> }
+rule expr:if {
+  'if' <expr> <block>
+  [ 'else' <else=.block> ]?
+}
+# TODO have "loop" do what "for" *and* "while"
+;#      do in other languages
+rule expr:loop { 'loop' <expr> <block> }
 
 token call { <id> '(' <exprlist> ')' }
 
