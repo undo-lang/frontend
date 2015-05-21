@@ -46,7 +46,7 @@ rule  inner-expr:if {
 # TODO have "loop" do what "for" *and* "while"
 #      do in other languages
 rule  inner-expr:loop {
-  'loop' <cond=.expr> <body=.block>
+  'loop' <cond=.outer-expr> <body=.block>
 }
 token inner-expr:call { <call> }
 token inner-expr:var { <id> }

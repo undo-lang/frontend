@@ -2,7 +2,7 @@ use lib 'lib/';
 use Test;
 use Undo::Grammar;
 
-plan 8;
+plan 13;
 
 ok Undo::Grammar.parse('', :rule<exprlist>), 'can parse an EMPTY list of exprs';
 
@@ -39,7 +39,6 @@ ok Undo::Grammar.parse(q:to/code/.trim), 'can parse var';
   var a, b, c
 code
 
-=begin x
 ok Undo::Grammar.parse(q:to/code/), 'can parse if with else';
   if bar(3, b) {
     x()
@@ -62,6 +61,10 @@ ok Undo::Grammar.parse(q:to/code/), 'can parse infix operators + nested inner ex
   print(if a + b { 1 } else { 2 } + 2)
 code
 
-=end x
+ok Undo::Grammar.parse(q:to/code/), 'can parse stupid stuff';
+  loop if a { True } else { False } {
+    x()
+  }
+code
 
 #is parse(''), '', 'empty strings give empty parses';
