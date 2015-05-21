@@ -2,8 +2,7 @@ use lib 'lib/';
 use Test;
 use Undo::Grammar;
 
-plan 6;
-
+plan 8;
 
 ok Undo::Grammar.parse('', :rule<exprlist>), 'can parse an EMPTY list of exprs';
 
@@ -21,20 +20,22 @@ ok Undo::Grammar.parse(q:to/code/), 'can parse calls + nested calls';
   foo(3, bar(4, 5))
 code
 
-ok Undo::Grammar.parse(q:to/code/), 'can parse if';
-  if bar(3, b) {
-    y()
-  }
-code
-
-ok Undo::Grammar.parse(q:to/code/, :rule<block>), 'can parse multilines blocks';
+# trim trailing whitespace, because it's not <block>'s role
+ok Undo::Grammar.parse(q:to/code/.trim, :rule<block>), 'can parse multilines blocks';
   {
     x()
+
     y()
   }
 code
 
-ok Undo::Grammar.parse(q:to/code/), 'can parse var';
+ok Undo::Grammar.parse(q:to/code/), 'can parse if';
+  if a {
+    y()
+  }
+code
+
+ok Undo::Grammar.parse(q:to/code/.trim), 'can parse var';
   var a, b, c
 code
 

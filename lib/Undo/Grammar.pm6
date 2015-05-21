@@ -1,23 +1,28 @@
+#use Grammar::Debugger;
 unit grammar Undo::Grammar;
+
+# note: empty quotes ('') are used to apply the <.ws> token
+#       inside of `rule`s
 
 my @infix-operators = <+ - *>;
 
-token sp { ' '* }
+token space { \s* }
+
+token ws { [ ' ' | \\t ] * }
 
 token id { <[a..z A..Z -]> + }
 
 token TOP { <lines> }
-rule block {
-  <.ws> '{' ~ '}'
-  <lines> <.ws>
+token block {
+  <.space> '{' <lines> '}' <.space>
 }
 
 token lines {
-  "\n"* <line> * %% "\n"+
+  "\n"? <line> * %% "\n"
 }
-token line {
-  <.sp>
-  [ <outer-expr> || <stmt> ] <.sp>
+regex line {
+  :ratchet
+  <.ws> [ <stmt> | <outer-expr> ]? <.ws>
 }
 
 proto token stmt { * }
@@ -30,16 +35,10 @@ token infix {
 }
 
 proto token outer-expr { * } 
-token outer-expr:expr { [<.sp> <inner-expr> <.sp>] + % <infix> }
+rule outer-expr:expr { ['' <inner-expr> ''] + % <infix> }
 
 
 proto regex inner-expr { * }
-token inner-expr:call { <call> }
-token inner-expr:var { <id> }
-token inner-expr:literal { <literal> }
-token inner-expr:parens {
-  '(' ~ ')' <outer-expr>
-}
 rule  inner-expr:if {
   'if' <cond=.outer-expr> <then=.block>
   [ 'else' <else=.block> ]?
@@ -48,6 +47,12 @@ rule  inner-expr:if {
 #      do in other languages
 rule  inner-expr:loop {
   'loop' <cond=.expr> <body=.block>
+}
+token inner-expr:call { <call> }
+token inner-expr:var { <id> }
+token inner-expr:literal { <literal> }
+token inner-expr:parens {
+  '(' ~ ')' <outer-expr>
 }
 
 token call {
