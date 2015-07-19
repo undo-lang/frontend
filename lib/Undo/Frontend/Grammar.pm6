@@ -1,4 +1,3 @@
-#use Grammar::Debugger;
 unit grammar Undo::Grammar;
 
 # note: empty quotes ('') are used to apply the <.ws> token
@@ -9,8 +8,6 @@ my @infix-operators = <+ - *>;
 token space { \s* }
 
 token ws { [ ' ' | \\t ] * }
-
-token id { <[a..z A..Z -]> + }
 
 token TOP { <lines> }
 token block {
@@ -24,6 +21,8 @@ regex line {
   :ratchet
   <.ws> [ <stmt> | <outer-expr> ]? <.ws>
 }
+
+token id { <[a..z A..Z -]> + }
 
 proto token stmt { * }
 rule stmt:var-decl {
@@ -49,7 +48,7 @@ rule  inner-expr:loop {
   'loop' <cond=.outer-expr> <body=.block>
 }
 token inner-expr:call { <call> }
-token inner-expr:var { <id> }
+token inner-expr:id { <id> }
 token inner-expr:literal { <literal> }
 token inner-expr:parens {
   '(' ~ ')' <outer-expr>

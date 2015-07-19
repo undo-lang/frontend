@@ -1,5 +1,18 @@
 unit module Undo::AST;
 
+class Name {
+  submethod BUILD { ... }
+};
+
+class Name::Qualified is Name {
+  has Str @.module-part;
+  has Str $.name;
+}
+
+class Name::Unqualified is Name {
+  has Str $.name;
+}
+
 # the literals!
 class Literal {
   submethod BUILD { ... }
@@ -13,10 +26,15 @@ class Literal::String {
   has Str $.value;
 }
 
-# TODO will have to be looked up in some kind of "Scope"?
-# should it really be Str? or is another wrapper needed?
 class Literal::Variable {
-  has Str $.name;
+  has Name $.name;
+}
+
+# declarations
+module Decl { };
+
+class Decl::Variable {
+  has Name $.id;
 }
 
 # expressions
@@ -29,22 +47,18 @@ class Block_ {
   has Expression @.line;
 }
 
-class Function {
-  has Block_ $.block;
-}
-
 class Expression::Call {
-  has Callable $.fn; # TODO `fn` should have its own type, or should just be an ID?
+  has Name $.fn; # TODO use some other type here. Where should identifiers be resolved???
   has Expression @.arguments;
 }
 
 class Expression::Conditional {
   has Expression $.condition; # TODO use something else?
-  has Block_ $.block;
+  has Block_ $.then;
+  has Block_ $.else;
 }
 
 class Expression::Loop {
   has Expression $.condition;
-  has Expression:_ $.termination; # (optional)
   has Block_ $.block;
 }

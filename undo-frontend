@@ -1,0 +1,16 @@
+#!/usr/bin/env perl6
+use lib 'lib/';
+use Undo::Frontend;
+use Serialize::Tiny;
+
+subset File of Str where .IO.e && !.IO.d;
+
+#| Parse a whole file
+multi MAIN(File $file) {
+  say serialize(parse($file.slurp), :with-class);
+}
+
+#| Compile a chunk of code
+multi MAIN(Str $source, Bool :$source!) {
+  say 
+}

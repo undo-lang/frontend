@@ -61,10 +61,10 @@ ok Undo::Grammar.parse(q:to/code/), 'can parse infix operators + nested inner ex
   print(if a + b { 1 } else { 2 } + 2)
 code
 
+# TODO test inner-expr:parens
+
 ok Undo::Grammar.parse(q:to/code/), 'can parse stupid stuff';
   loop if a { True } else { False } {
     x()
   }
 code
-
-#is parse(''), '', 'empty strings give empty parses';
