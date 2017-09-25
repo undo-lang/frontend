@@ -1,8 +1,8 @@
 use lib 'lib/';
 use Test;
-use Undo::Grammar;
+use Undo::Frontend::Grammar;
 
-plan 13;
+plan 14;
 
 ok Undo::Grammar.parse('', :rule<exprlist>), 'can parse an EMPTY list of exprs';
 
@@ -10,6 +10,10 @@ ok Undo::Grammar.parse('a, b, c', :rule<exprlist>), 'can parse a list of exprs';
 
 ok Undo::Grammar.parse(q:to/code/), 'can parse calls';
   foo()
+code
+
+ok Undo::Grammar.parse(q:to/code/), 'can parse calls with a trailing semicolon';
+  foo();
 code
 
 ok Undo::Grammar.parse(q:to/code/), 'can pass arguments to calls';
@@ -20,18 +24,17 @@ ok Undo::Grammar.parse(q:to/code/), 'can parse calls + nested calls';
   foo(3, bar(4, 5))
 code
 
-# trim trailing whitespace, because it's not <block>'s role
-ok Undo::Grammar.parse(q:to/code/.trim, :rule<block>), 'can parse multilines blocks';
+ok Undo::Grammar.parse(q:to/code/, :rule<block>), 'can parse multilines blocks';
   {
-    x()
+    x();
 
-    y()
+    y();
   }
 code
 
 ok Undo::Grammar.parse(q:to/code/), 'can parse if';
   if a {
-    y()
+    y();
   }
 code
 

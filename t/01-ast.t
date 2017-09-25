@@ -1,13 +1,13 @@
 use lib 'lib/';
 use Test;
-use Undo::AST;
+use Undo::Frontend::AST;
 
-dies_ok { Literal.new }, "can't build a new Literal";
+plan 2;
 
-dies_ok { Expression.new  }, "can't build an Expression";
+dies-ok { Literal.new }, "can't build a new Literal";
 
-my $expr-call = Expression::Call.new(:fn({ 1 }));
+dies-ok { Expression.new  }, "can't build an Expression";
 
-lives_ok {
-  #Expression::Loop.new(:condition($expr-call), :termination(Any));
-}
+#my $expr-call = Expression::Call.new(:fn({ 1 }));
+
+# lives-ok { Expression::Loop.new(:condition($expr-call), :termination(Any)); }

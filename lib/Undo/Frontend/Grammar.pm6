@@ -5,17 +5,13 @@ unit grammar Undo::Grammar;
 
 my @infix-operators = <+ - *>;
 
-token space { \s* }
-
-token ws { [ ' ' | \\t ] * }
-
 token TOP { <lines> }
 token block {
-  <.space> '{' <lines> '}' <.space>
+  <.ws> '{' <lines> '}' <.ws>
 }
 
 token lines {
-  "\n"? <line> * %% "\n"
+  <line> * %% ";"
 }
 regex line {
   :ratchet
