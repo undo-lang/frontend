@@ -1,4 +1,4 @@
-unit grammar Undo::Grammar;
+unit grammar Undo::Frontend::Grammar;
 
 # note: empty quotes ('') are used to apply the <.ws> token
 #       inside of `rule`s
@@ -29,8 +29,7 @@ token infix {
   || @infix-operators
 }
 
-proto token outer-expr { * } 
-rule outer-expr:expr { ['' <inner-expr> ''] + % <infix> }
+rule outer-expr { ['' <inner-expr> ''] + % <infix> }
 
 
 proto regex inner-expr { * }

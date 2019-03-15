@@ -1,8 +1,13 @@
-unit module Undo::AST;
+unit module Undo::Frontend::AST;
 
-class Name {
-  submethod BUILD { ... }
-};
+# expressions
+class Expression {
+  #submethod BUILD { ... }
+}
+
+class Name is Expression {
+  #submethod BUILD { ... }
+}
 
 class Name::Qualified is Name {
   has Str @.module-part;
@@ -14,51 +19,46 @@ class Name::Unqualified is Name {
 }
 
 # the literals!
-class Literal {
-  submethod BUILD { ... }
+class Literal is Expression {
+  #submethod BUILD { ... }
 }
 
-class Literal::Num {
+class Literal::Num is Literal {
   has Int $.value;
 }
 
-class Literal::String {
+class Literal::String is Literal {
   has Str $.value;
 }
 
-class Literal::Variable {
-  has Name $.name;
-}
+#class Literal::Variable {
+#  has Name $.name;
+#}
 
 # declarations
-module Decl { };
+module Decl { }
 
 class Decl::Variable {
   has Name $.id;
 }
-
-# expressions
-class Expression {
-  submethod BUILD { ... }
-};
 
 # TODO: seems like there's a rakudo bug that prevents me from calling this "Block"... dunno which name I'm gonna use instead
 class Block_ {
   has Expression @.line;
 }
 
-class Expression::Call {
+class Expression::Call is Expression {
   has Name $.fn; # TODO use some other type here. Where should identifiers be resolved???
-  has Expression @.arguments;
+  has Expression @.argument;
 }
 
-class Expression::Conditional {
+class Expression::Conditional is Expression {
   has Expression $.condition; # TODO use something else?
   has Block_ $.then;
   has Block_ $.else;
 }
 
-class Expression::Loop {
+class Expression::Loop is Expression {
   has Expression $.condition;
   has Block_ $.block;
 }

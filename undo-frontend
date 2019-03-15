@@ -7,10 +7,10 @@ subset File of Str where .IO.e && !.IO.d;
 
 #| Parse a whole file
 multi MAIN(File $file) {
-  say serialize(parse($file.slurp), :with-class);
+  say serialize(parse(slurp $file), :class-key("_type"));
 }
 
 #| Compile a chunk of code
-multi MAIN(Str $source, Bool :$source!) {
-  say 
-}
+#multi MAIN(Str $source, Bool :$eval!) {
+#  say 
+#}

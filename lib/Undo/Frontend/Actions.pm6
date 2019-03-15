@@ -1,12 +1,18 @@
-use Undo::Frontend::AST;
 unit class Undo::Frontend::Actions;
+use fatal;
+use Undo::Frontend::AST;
 
 method TOP($/) {
-  make $<lines>>>.made;
+  make $<lines>.made; 
+}
+
+method block($/) {
+  make $<lines>.made;
 }
 
 method lines($/) {
-  make $<line>>>.made;
+  # why does this need to be qualified?
+  make Undo::Frontend::AST::Block_.new(line => $<line>>>.made);
 }
 
 method line($/) {
@@ -22,14 +28,15 @@ method stmt:var-decl ($/) {
   make $/<id>>>.map: { Decl::Variable.new(:id($_)) };
 }
 
-method outer-expr:expr ($/) {
+method outer-expr ($/) {
   # !!!!
   # TODO
   # !!!!
   # manage infixes
-  # this will be a rather complex piece of code, with operator precedence and all
-  # maybe it'll be moved to an external module...
-  make $<inner-expr>>>.made;
+
+# DISCARD THE REST CURRENTLY
+  make $<inner-expr>[0].made;
+  #make $<inner-expr>>>.made;
 }
 
 method inner-expr:if ($/) {
@@ -67,17 +74,20 @@ method inner-expr:parens ($/) {
 # and now, the real implementation
 
 method call($/) {
-  make Expression::Call.new()
+  make Expression::Call.new(
+    fn => $<id>.made,
+    argument => $<exprlist>.made
+  )
 }
 
 method exprlist($/) {
-  make $<outer-expr>>>.made;
+  make [$<outer-expr>>>.made];
 }
 
 method literal:sym<num>($/) {
-  make $/.Int;
+  make Literal::Num.new(value => $/.Int);
 }
 
 method literal:sym<str>($/) {
-  make $/.Str;
+  make Literal::String(value => $/.Str);
 }
