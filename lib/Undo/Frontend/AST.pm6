@@ -36,15 +36,10 @@ class Literal::String is Literal {
 #}
 
 # declarations
-module Decl { }
-
-class Decl::Variable {
-  has Name $.id;
-}
 
 # TODO: seems like there's a rakudo bug that prevents me from calling this "Block"... dunno which name I'm gonna use instead
-class Block_ {
-  has Expression @.line;
+class Block_ is export {
+  has Expression @.body;
 }
 
 class Expression::Call is Expression {
@@ -61,4 +56,29 @@ class Expression::Conditional is Expression {
 class Expression::Loop is Expression {
   has Expression $.condition;
   has Block_ $.block;
+}
+
+class Decl {
+	# submethod BUILD { ... }
+}
+
+class Decl::Variable is Decl {
+  has Name::Unqualified $.name;
+}
+
+#class Import is Decl {
+#}
+
+class Parameter {
+	has Name::Unqualified $.name;
+}
+
+class Fn is Decl is export {
+	has Name::Unqualified $.name;
+	has Parameter @.parameter;
+	has Block_ $.body;
+}
+
+class Program is export {
+	has Decl @.decl;
 }

@@ -5,7 +5,28 @@ unit grammar Undo::Frontend::Grammar;
 
 my @infix-operators = <+ - *>;
 
-token TOP { <lines> }
+token TOP { <decl> }
+
+proto token decl { * }
+#token decl:sym<import> { <import> }
+token decl:sym<fn> { <fn-decl> }
+token decl:sym<var> { <var-decl> }
+
+rule var-decl {
+  'var' <id> + %% ','
+}
+
+rule fn-decl {
+	'' 'fn' <id>
+	[ '(' <parameters> ')' ]
+	<block>
+}
+
+token parameters {
+	# TODO default values
+	<id>* %% ','
+}
+
 token block {
   <.ws> '{' <lines> '}' <.ws>
 }
@@ -19,11 +40,6 @@ regex line {
 }
 
 token id { <[a..z A..Z -]> + }
-
-proto token stmt { * }
-rule stmt:var-decl {
-  'var' <id> + %% ','
-}
 
 token infix {
   || @infix-operators

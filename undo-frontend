@@ -2,12 +2,16 @@
 use lib 'lib/';
 use Undo::Frontend;
 use Serialize::Tiny;
+use JSON::Tiny;
 
 subset File of Str where .IO.e && !.IO.d;
 
 #| Parse a whole file
 multi MAIN(File $file) {
-  say serialize(parse(slurp $file), :class-key("_type"));
+  my $parse-tree = parse(slurp $file);
+  die "Parse error" unless $parse-tree;
+  my %ast = serialize($parse-tree, :class-key("_type"));
+  say to-json(%ast);
 }
 
 #| Compile a chunk of code

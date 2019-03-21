@@ -3,16 +3,33 @@ use fatal;
 use Undo::Frontend::AST;
 
 method TOP($/) {
-  make $<lines>.made; 
+  make Program.new(decl => $<decl>>>.made); 
 }
 
-method block($/) {
-  make $<lines>.made;
+method decl:sym<fn> ($/) { make $<fn-decl>.made; }
+
+method fn-decl($/) {
+  make Fn.new(
+    name => $<id>.made,
+    parameter => $<parameters>.made,
+    body => $<block>.made,
+  );
 }
+
+method parameters($/) {
+  make $<id>.map(-> $id { Parameter.new(name => $id.made) });
+}
+
+method decl:sym<var> ($/) { make $<var-decl>.made; }
+
+method var-decl($/) {
+  make $/<id>>>.map({ Decl::Variable.new(id => $_) });
+}
+
+method block($/) { make $<lines>.made; }
 
 method lines($/) {
-  # why does this need to be qualified?
-  make Undo::Frontend::AST::Block_.new(line => $<line>>>.made);
+  make Block_.new(body => $<line>>>.made);
 }
 
 method line($/) {
@@ -22,10 +39,6 @@ method line($/) {
 method id($/) {
   # TODO manage qualified names
   make Name::Unqualified.new(:name($/.Str));
-}
-
-method stmt:var-decl ($/) {
-  make $/<id>>>.map: { Decl::Variable.new(:id($_)) };
 }
 
 method outer-expr ($/) {
