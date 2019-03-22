@@ -2,9 +2,7 @@ unit class Undo::Frontend::Actions;
 use fatal;
 use Undo::Frontend::AST;
 
-method TOP($/) {
-  make Program.new(decl => $<decl>>>.made); 
-}
+method TOP($/) { $.block($/); }
 
 method decl:sym<fn> ($/) { make $<fn-decl>.made; }
 
@@ -26,11 +24,11 @@ method var-decl($/) {
   make $/<id>>>.map({ Decl::Variable.new(id => $_) });
 }
 
-method block($/) { make $<lines>.made; }
-
-method lines($/) {
-  make Block_.new(body => $<line>>>.made);
+method block($/) {
+  make Block_.new(body => $<lines>.made);
 }
+
+method lines($/) { make $<line>>>.made; }
 
 method line($/) {
   make ($<stmt> // $<outer-expr>).made;

@@ -5,7 +5,7 @@ unit grammar Undo::Frontend::Grammar;
 
 my @infix-operators = <+ - *>;
 
-token TOP { <decl> }
+token TOP { <lines> }
 
 proto token decl { * }
 #token decl:sym<import> { <import> }
@@ -36,7 +36,7 @@ token lines {
 }
 regex line {
   :ratchet
-  <.ws> [ <stmt> | <outer-expr> ]? <.ws>
+  <.ws> [ <decl> | <outer-expr> ]? <.ws>
 }
 
 token id { <[a..z A..Z -]> + }

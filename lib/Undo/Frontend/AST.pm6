@@ -1,7 +1,11 @@
 unit module Undo::Frontend::AST;
 
+class Line {
+  #submethod BUILD { ... }
+}
+
 # expressions
-class Expression {
+class Expression is Line {
   #submethod BUILD { ... }
 }
 
@@ -58,7 +62,7 @@ class Expression::Loop is Expression {
   has Block_ $.block;
 }
 
-class Decl {
+class Decl is Line {
 	# submethod BUILD { ... }
 }
 
@@ -77,8 +81,4 @@ class Fn is Decl is export {
 	has Name::Unqualified $.name;
 	has Parameter @.parameter;
 	has Block_ $.body;
-}
-
-class Program is export {
-	has Decl @.decl;
 }
