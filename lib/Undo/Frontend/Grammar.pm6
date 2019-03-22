@@ -79,7 +79,22 @@ proto token literal { * }
 token literal:sym<num> {
   '-'? <[0..9]> +
 }
-token literal:sym<str> {
-  '"' ~ '"' <[a..z A..Z -]> +
+token literal:sym<str> { <string> }
+# -- Section from JSON::Tiny
+token string {
+    (:ignoremark '"') ~ \" [ <str> | \\ <str=.str_escape> ]*
 }
+
+token str {
+    <-["\\\t\x[0A]]>+
+}
+
+token str_escape {
+    <["\\/bfnrt]> | 'u' <utf16_codepoint>+ % '\u'
+}
+
+token utf16_codepoint {
+    <.xdigit>**4
+}
+# -- END Section from JSON::Tiny
 #token literal:sym<seq> { '[' <exprlist> ']' }

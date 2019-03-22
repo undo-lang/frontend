@@ -100,5 +100,43 @@ method literal:sym<num>($/) {
 }
 
 method literal:sym<str>($/) {
-  make Literal::String(value => $/.Str);
+  make Literal::String.new(value => $<string>.made);
 }
+
+# -- Section from JSON::Tiny
+method string($/) {
+    my $str =  +@$<str> == 1
+        ?? $<str>[0].made
+        !! $<str>>>.made.join;
+
+    # see https://github.com/moritz/json/issues/25
+    # when a combining character comes after an opening quote,
+    # it doesn't become part of the quoted string, because
+    # it's stuffed into the same grapheme as the quote.
+    # so we need to extract those combining character(s)
+    # from the match of the opening quote, and stuff it into the string.
+    if $0.Str ne '"' {
+        my @chars := $0.Str.NFC;
+        $str = @chars[1..*].chrs ~ $str;
+    }
+    make $str
+}
+
+method str($/)               { make ~$/ }
+
+my %h = '\\' => "\\",
+        '/'  => "/",
+        'b'  => "\b",
+        'n'  => "\n",
+        't'  => "\t",
+        'f'  => "\f",
+        'r'  => "\r",
+        '"'  => "\"";
+method str_escape($/) {
+    if $<utf16_codepoint> {
+        make utf16.new( $<utf16_codepoint>.map({:16(~$_)}) ).decode();
+    } else {
+        make %h{~$/};
+    }
+}
+# -- END Section from JSON::Tiny
