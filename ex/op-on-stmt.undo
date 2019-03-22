@@ -1,0 +1,1 @@
+print(if True { 0 } else { 1 } + if 2 { True });
