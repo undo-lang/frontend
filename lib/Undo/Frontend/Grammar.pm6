@@ -3,7 +3,7 @@ unit grammar Undo::Frontend::Grammar;
 # note: empty quotes ('') are used to apply the <.ws> token
 #       inside of `rule`s
 
-my @infix-operators = <+ - *>;
+my @infix-operators = <++ + - *>;
 
 token TOP { <lines> }
 
