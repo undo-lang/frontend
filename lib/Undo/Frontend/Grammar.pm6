@@ -43,7 +43,10 @@ rule line {
   ]? ''
 }
 
-token id { <[a..z A..Z -]> + }
+token id {
+  <[a..z A..Z]>
+  <[a..z A..Z 0..9 -]>*
+}
 
 token infix {
   || @infix-operators
