@@ -10,7 +10,7 @@ subset File of Str where .IO.e && !.IO.d;
 multi MAIN(File $file) {
   my $parse-tree = parse(slurp $file);
   die "Parse error" unless $parse-tree;
-  my %ast = serialize($parse-tree, :class-key{ type => .split('::')[*-1] }); # TODO Block_ => Block
+  my %ast = serialize($parse-tree, :class-key{ type => .split('::')[*-1] given S/_//; }); # this discards Literal:: and Name::
   say to-json(%ast);
 }
 
