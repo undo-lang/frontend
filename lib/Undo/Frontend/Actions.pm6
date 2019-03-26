@@ -33,7 +33,7 @@ method lines($/) {
 }
 
 method line($/) {
-  make ($<fn-decl> // $<var-decl> // $<outer-expr>).made;
+  make ($<fn-decl> // $<var-decl> // $<outer-expr>).made // Empty;
 }
 
 method id($/) {
