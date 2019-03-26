@@ -7,24 +7,24 @@ my @infix-operators = <++ + - *>;
 
 token TOP { <lines> }
 
-proto token decl { * }
+#proto token decl { * }
 #token decl:sym<import> { <import> }
-token decl:sym<fn> { <fn-decl> }
-token decl:sym<var> { <var-decl> }
+#token decl:sym<fn> { <fn-decl> }
+#token decl:sym<var> { <var-decl> }
 
 rule var-decl {
-  'var' <id> + %% ','
+  <id> + %% ','
 }
 
 rule fn-decl {
-	'' 'fn' <id>
-	[ '(' <parameters> ')' ]
-	<block>
+  <id>
+  [ '(' ~ ')' <parameters> ]?
+  <block>
 }
 
 token parameters {
-	# TODO default values
-	<id>* %% ','
+  # TODO default values
+  <id>* %% [<.ws> ',' <.ws>]
 }
 
 token block {
@@ -34,7 +34,7 @@ token block {
 token lines {
   <line> * %% ";"
 }
-regex line {
+rule line {
   :ratchet
   <.ws> [ <decl> | <outer-expr> ]? <.ws>
 }
@@ -46,7 +46,6 @@ token infix {
 }
 
 rule outer-expr { ['' <inner-expr> ''] + % <infix> }
-
 
 proto regex inner-expr { * }
 rule  inner-expr:if {

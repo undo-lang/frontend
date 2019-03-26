@@ -15,7 +15,7 @@ method fn-decl($/) {
 }
 
 method parameters($/) {
-  make $<id>.map(-> $id { Parameter.new(name => $id.made) });
+  make $<id>.list.map(-> $id { Parameter_.new(name => $id.made) });
 }
 
 method decl:sym<var> ($/) { make $<var-decl>.made; }
@@ -28,10 +28,12 @@ method block($/) {
   make Block_.new(body => $<lines>.made);
 }
 
-method lines($/) { make $<line>>>.made; }
+method lines($/) {
+  make $<line>>>.made;
+}
 
 method line($/) {
-  make ($<stmt> // $<outer-expr>).made;
+  make ($<fn-decl> // $<var-decl> // $<outer-expr>).made;
 }
 
 method id($/) {

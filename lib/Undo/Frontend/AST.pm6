@@ -43,7 +43,7 @@ class Literal::String is Literal {
 
 # TODO: seems like there's a rakudo bug that prevents me from calling this "Block"... dunno which name I'm gonna use instead
 class Block_ is export {
-  has Expression @.body;
+  has Line @.body;
 }
 
 class Expression::Call is Expression {
@@ -63,7 +63,7 @@ class Expression::Loop is Expression {
 }
 
 class Decl is Line {
-	# submethod BUILD { ... }
+  # submethod BUILD { ... }
 }
 
 class Decl::Variable is Decl {
@@ -73,12 +73,12 @@ class Decl::Variable is Decl {
 #class Import is Decl {
 #}
 
-class Parameter {
-	has Name::Unqualified $.name;
+class Parameter_ is export {
+  has Name::Unqualified $.name;
 }
 
 class Fn is Decl is export {
-	has Name::Unqualified $.name;
-	has Parameter @.parameter;
-	has Block_ $.body;
+  has Name::Unqualified $.name;
+  has Parameter_ @.parameter;
+  has Block_ $.body;
 }
