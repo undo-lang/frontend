@@ -36,7 +36,11 @@ token lines {
 }
 rule line {
   :ratchet
-  <.ws> [ <decl> | <outer-expr> ]? <.ws>
+  '' [
+  | 'fn': <fn-decl>
+  | 'var': <var-decl>
+  | <outer-expr>
+  ]? ''
 }
 
 token id { <[a..z A..Z -]> + }
