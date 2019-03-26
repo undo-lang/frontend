@@ -8,14 +8,14 @@ method decl:sym<fn> ($/) { make $<fn-decl>.made; }
 
 method fn-decl($/) {
   make Fn.new(
-    name => $<id>.made,
+    name => $<id>.made.name,
     parameter => $<parameters>.made,
     body => $<block>.made,
   );
 }
 
 method parameters($/) {
-  make $<id>.list.map(-> $id { Parameter_.new(name => $id.made) });
+  make $<id>.list.map(-> $id { Parameter_.new(name => $id.made.name) });
 }
 
 method decl:sym<var> ($/) { make $<var-decl>.made; }
