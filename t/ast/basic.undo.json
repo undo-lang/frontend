@@ -1,0 +1,19 @@
+{
+    "body": [
+        {
+            "argument": [
+                {
+                    "type": "Undo::Frontend::AST::Literal::String",
+                    "value": "Hello world!"
+                }
+            ],
+            "fn": {
+                "name": "print",
+                "type": "Undo::Frontend::AST::Name::Unqualified"
+            },
+            "type": "Undo::Frontend::AST::Expression::Call"
+        }
+    ],
+    "type": "Undo::Frontend::AST::Block_"
+}
+
