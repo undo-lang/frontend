@@ -1,0 +1,11 @@
+fn a {
+};
+
+fn b() {
+};
+
+fn c(param1) {
+};
+
+fn d(param1, param2, param3) {
+};
