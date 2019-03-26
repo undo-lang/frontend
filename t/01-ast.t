@@ -1,13 +1,27 @@
 use lib 'lib/';
 use Test;
-use Undo::Frontend::AST;
+use JSON::Fast;
+use Serialize::Tiny;
+use Undo::Frontend;
 
-plan 2;
+sub run-code {
+  from-json(to-json( # Perl 6 is dumb
+    serialize(parse($^content), :class-key<type>)
+  ));
+}
 
-dies-ok { Literal.new }, "can't build a new Literal";
+for dir('t/ast') { # TODO base on current dir
+  next unless /'.undo'$/;
+  my $expected = $_ ~ '.json';
+  
+  unless $expected.IO.e {
+    skip "No expected AST for $_";
+    next;
+  }
+  pass "$_ => $expected";
+  my %expected = from-json(slurp $expected);
+  my %serialized = run-code(.slurp);
+  is-deeply %expected, %serialized, "Code gave the expected AST";
+}
 
-dies-ok { Expression.new  }, "can't build an Expression";
-
-#my $expr-call = Expression::Call.new(:fn({ 1 }));
-
-# lives-ok { Expression::Loop.new(:condition($expr-call), :termination(Any)); }
+done-testing;
