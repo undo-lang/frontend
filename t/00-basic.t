@@ -73,3 +73,7 @@ ok parse(q:to/code/), 'can parse stupid stuff';
     x()
   }
 code
+
+ok parse(q:to/code/), 'can nest calls';
+  f(1)("deux")(c);
+code
