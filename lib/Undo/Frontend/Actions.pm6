@@ -66,11 +66,6 @@ method inner-expr:loop ($/) {
   );
 }
 
-# just defer those to their own action methods
-method inner-expr:call ($/) {
-  make $<call>.made;
-}
-
 method inner-expr:id ($/) {
   make $<id>.made;
 }
@@ -83,17 +78,16 @@ method inner-expr:parens ($/) {
   make $<outer-expr>.made;
 }
 
-# and now, the real implementation
-
-method call($/) {
-  make Expression::Call.new(
-    fn => $<id>.made,
-    argument => $<exprlist>.made
-  )
+method call-expr($/) {
+  my $start = $<inner-expr>.made;
+  my @calls = $<exprlist>».made;
+  make ($start, |@calls).reduce(-> $fn, @argument {
+    Expression::Call.new(:$fn, :@argument);
+  });
 }
 
 method exprlist($/) {
-  make [$<outer-expr>>>.made];
+  make [$<outer-expr>».made];
 }
 
 method literal:sym<num>($/) {

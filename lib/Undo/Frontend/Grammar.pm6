@@ -69,16 +69,10 @@ rule inner-expr:if {
 rule  inner-expr:loop {
   'loop' <cond=.outer-expr> <body=.block>
 }
-token inner-expr:call { <call> }
 token inner-expr:id { <id> }
 token inner-expr:literal { <literal> }
 token inner-expr:parens {
   '(' ~ ')' <outer-expr>
-}
-
-token call {
-  <id>
-  '(' <exprlist> ')'
 }
 
 token exprlist {
