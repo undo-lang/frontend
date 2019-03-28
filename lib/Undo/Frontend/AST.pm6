@@ -47,7 +47,7 @@ class Block_ is export {
 }
 
 class Expression::Call is Expression {
-  has Name $.fn; # TODO use some other type here. Where should identifiers be resolved???
+  has Expression $.fn;
   has Expression @.argument;
 }
 
