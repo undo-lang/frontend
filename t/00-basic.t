@@ -2,29 +2,31 @@ use lib 'lib/';
 use Test;
 use Undo::Frontend::Grammar;
 
-plan 14;
+plan 15;
 
-ok Undo::Grammar.parse('', :rule<exprlist>), 'can parse an EMPTY list of exprs';
+my &parse = sub (|c) { Undo::Frontend::Grammar.parse(|c) };
 
-ok Undo::Grammar.parse('a, b, c', :rule<exprlist>), 'can parse a list of exprs';
+ok parse('', :rule<exprlist>), 'can parse an EMPTY list of exprs';
 
-ok Undo::Grammar.parse(q:to/code/), 'can parse calls';
+ok parse('a, b, c', :rule<exprlist>), 'can parse a list of exprs';
+
+ok parse(q:to/code/), 'can parse calls';
   foo()
 code
 
-ok Undo::Grammar.parse(q:to/code/), 'can parse calls with a trailing semicolon';
+ok parse(q:to/code/), 'can parse calls with a trailing semicolon';
   foo();
 code
 
-ok Undo::Grammar.parse(q:to/code/), 'can pass arguments to calls';
+ok parse(q:to/code/), 'can pass arguments to calls';
   foo(1, a, "hey")
 code
 
-ok Undo::Grammar.parse(q:to/code/), 'can parse calls + nested calls';
+ok parse(q:to/code/), 'can parse calls + nested calls';
   foo(3, bar(4, 5))
 code
 
-ok Undo::Grammar.parse(q:to/code/, :rule<block>), 'can parse multilines blocks';
+ok parse(q:to/code/, :rule<block>), 'can parse multilines blocks';
   {
     x();
 
@@ -32,17 +34,17 @@ ok Undo::Grammar.parse(q:to/code/, :rule<block>), 'can parse multilines blocks';
   }
 code
 
-ok Undo::Grammar.parse(q:to/code/), 'can parse if';
+ok parse(q:to/code/), 'can parse if';
   if a {
     y();
   }
 code
 
-ok Undo::Grammar.parse(q:to/code/.trim), 'can parse var';
+ok parse(q:to/code/.trim), 'can parse var';
   var a, b, c
 code
 
-ok Undo::Grammar.parse(q:to/code/), 'can parse if with else';
+ok parse(q:to/code/), 'can parse if with else';
   if bar(3, b) {
     x()
   } else {
@@ -50,23 +52,23 @@ ok Undo::Grammar.parse(q:to/code/), 'can parse if with else';
   }
 code
 
-ok Undo::Grammar.parse(q:to/code/), 'can parse loop';
+ok parse(q:to/code/), 'can parse loop';
   loop foo {
     bar(buz)
   }
 code
 
-ok Undo::Grammar.parse(q:to/code/), 'can parse string literals';
+ok parse(q:to/code/), 'can parse string literals';
   hello(1, "hello")
 code
 
-ok Undo::Grammar.parse(q:to/code/), 'can parse infix operators + nested inner exprs';
+ok parse(q:to/code/), 'can parse infix operators + nested inner exprs';
   print(if a + b { 1 } else { 2 } + 2)
 code
 
 # TODO test inner-expr:parens
 
-ok Undo::Grammar.parse(q:to/code/), 'can parse stupid stuff';
+ok parse(q:to/code/), 'can parse stupid stuff';
   loop if a { True } else { False } {
     x()
   }
