@@ -41,15 +41,14 @@ method id($/) {
   make Name::Unqualified.new(:name($/.Str));
 }
 
-method outer-expr ($/) {
+method outer-expr($/) {
   # !!!!
   # TODO
   # !!!!
   # manage infixes
 
 # DISCARD THE REST CURRENTLY
-  make $<inner-expr>[0].made;
-  #make $<inner-expr>>>.made;
+  make $<call-expr>[0].made;
 }
 
 method inner-expr:if ($/) {

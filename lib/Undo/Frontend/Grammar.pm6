@@ -52,10 +52,15 @@ token infix {
   || @infix-operators
 }
 
-rule outer-expr { ['' <inner-expr> ''] + % <infix> }
+rule outer-expr { ['' <call-expr> '']+ % <infix> }
+
+regex call-expr {
+  <inner-expr>
+  [ '(' <exprlist> ')' ]*
+}
 
 proto regex inner-expr { * }
-rule  inner-expr:if {
+rule inner-expr:if {
   'if' <cond=.outer-expr> <then=.block>
   [ 'else' <else=.block> ]?
 }
