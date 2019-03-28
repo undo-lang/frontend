@@ -1,0 +1,37 @@
+{
+    "body": [
+        {
+            "argument": [
+                {
+                    "type": "Undo::Frontend::AST::Literal::Num",
+                    "value": 1
+                }
+            ],
+            "fn": {
+                "argument": [
+                    {
+                        "name": "b",
+                        "type": "Undo::Frontend::AST::Name::Unqualified"
+                    }
+                ],
+                "fn": {
+                    "argument": [
+                        {
+                            "type": "Undo::Frontend::AST::Literal::String",
+                            "value": "c"
+                        }
+                    ],
+                    "fn": {
+                        "name": "f",
+                        "type": "Undo::Frontend::AST::Name::Unqualified"
+                    },
+                    "type": "Undo::Frontend::AST::Expression::Call"
+                },
+                "type": "Undo::Frontend::AST::Expression::Call"
+            },
+            "type": "Undo::Frontend::AST::Expression::Call"
+        }
+    ],
+    "type": "Undo::Frontend::AST::Block_"
+}
+
