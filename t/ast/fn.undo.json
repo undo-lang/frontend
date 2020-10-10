@@ -1,0 +1,61 @@
+{
+    "body": [
+        {
+            "body": {
+                "body": [],
+                "type": "Block"
+            },
+            "name": "a",
+            "parameter": [
+                null
+            ],
+            "type": "Fn"
+        },
+        {
+            "body": {
+                "body": [],
+                "type": "Block"
+            },
+            "name": "b",
+            "parameter": [],
+            "type": "Fn"
+        },
+        {
+            "body": {
+                "body": [],
+                "type": "Block"
+            },
+            "name": "c",
+            "parameter": [
+                {
+                    "name": "param1",
+                    "type": "Parameter"
+                }
+            ],
+            "type": "Fn"
+        },
+        {
+            "body": {
+                "body": [],
+                "type": "Block"
+            },
+            "name": "d",
+            "parameter": [
+                {
+                    "name": "param1",
+                    "type": "Parameter"
+                },
+                {
+                    "name": "param2",
+                    "type": "Parameter"
+                },
+                {
+                    "name": "param3",
+                    "type": "Parameter"
+                }
+            ],
+            "type": "Fn"
+        }
+    ],
+    "type": "Block"
+}

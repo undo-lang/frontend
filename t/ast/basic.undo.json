@@ -3,17 +3,17 @@
         {
             "argument": [
                 {
-                    "type": "Undo::Frontend::AST::Literal::String",
+                    "type": "String",
                     "value": "Hello world!"
                 }
             ],
             "fn": {
                 "name": "print",
-                "type": "Undo::Frontend::AST::Name::Unqualified"
+                "type": "Unqualified"
             },
-            "type": "Undo::Frontend::AST::Expression::Call"
+            "type": "Call"
         }
     ],
-    "type": "Undo::Frontend::AST::Block_"
+    "type": "Block"
 }
 

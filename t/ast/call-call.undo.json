@@ -3,7 +3,7 @@
         {
             "argument": [
                 {
-                    "type": "Undo::Frontend::AST::Literal::Num",
+                    "type": "Num",
                     "value": 1
                 }
             ],
@@ -11,27 +11,27 @@
                 "argument": [
                     {
                         "name": "b",
-                        "type": "Undo::Frontend::AST::Name::Unqualified"
+                        "type": "Unqualified"
                     }
                 ],
                 "fn": {
                     "argument": [
                         {
-                            "type": "Undo::Frontend::AST::Literal::String",
+                            "type": "String",
                             "value": "c"
                         }
                     ],
                     "fn": {
                         "name": "f",
-                        "type": "Undo::Frontend::AST::Name::Unqualified"
+                        "type": "Unqualified"
                     },
-                    "type": "Undo::Frontend::AST::Expression::Call"
+                    "type": "Call"
                 },
-                "type": "Undo::Frontend::AST::Expression::Call"
+                "type": "Call"
             },
-            "type": "Undo::Frontend::AST::Expression::Call"
+            "type": "Call"
         }
     ],
-    "type": "Undo::Frontend::AST::Block_"
+    "type": "Block"
 }
 

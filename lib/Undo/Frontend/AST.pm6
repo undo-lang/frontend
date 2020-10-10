@@ -74,11 +74,11 @@ class Decl::Variable is Decl {
 #}
 
 class Parameter_ is export {
-  has Name::Unqualified $.name;
+  has Str $.name;
 }
 
 class Fn is Decl is export {
-  has Name::Unqualified $.name;
+  has Str $.name;
   has Parameter_ @.parameter;
   has Block_ $.body;
 }

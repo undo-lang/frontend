@@ -6,7 +6,7 @@ use Undo::Frontend;
 
 sub run-code {
   from-json(to-json( # Perl 6 is dumb
-    serialize(parse($^content), :class-key<type>)
+    serialize-ast(parse($^content))
   ));
 }
 
@@ -15,13 +15,12 @@ for dir('t/ast') { # TODO base on current dir
   my $expected = $_ ~ '.json';
   
   unless $expected.IO.e {
-    skip "No expected AST for $_";
+    skip "No expected AST for $_ (missing $expected)";
     next;
   }
-  pass "$_ => $expected";
   my %expected = from-json(slurp $expected);
   my %serialized = run-code(.slurp);
-  is-deeply %expected, %serialized, "Code gave the expected AST";
+  is-deeply %serialized, %expected, "$_ => $expected";
 }
 
 done-testing;
