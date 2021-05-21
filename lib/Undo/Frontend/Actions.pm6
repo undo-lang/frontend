@@ -14,6 +14,21 @@ method fn-decl($/) {
   );
 }
 
+method import-path($/) {
+  if +$<spread> {
+    make Decl::ImportPath::Spread.new(
+      path => $<id>>>.made>>.name,
+      spread => $<spread>>>.made>>.name, # ??
+    );
+  } else {
+    make Decl::ImportPath::Simple.new(path => $<id>>>.made>>.name);
+  }
+}
+
+method import($/) {
+  make Decl::ImportList.new(paths => $<import-path>>>.made);
+}
+
 method parameters($/) {
   make $<id>.list.map(-> $id { Parameter_.new(name => $id.made.name) });
 }
@@ -33,7 +48,7 @@ method lines($/) {
 }
 
 method line($/) {
-  make ($<fn-decl> // $<var-decl> // $<outer-expr>).made // Empty;
+  make ($<fn-decl> // $<var-decl> // $<import> // $<outer-expr>).made // Empty;
 }
 
 method id($/) {

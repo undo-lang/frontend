@@ -70,8 +70,20 @@ class Decl::Variable is Decl {
   has Name::Unqualified $.name;
 }
 
-#class Import is Decl {
-#}
+class Decl::ImportPath {}
+
+class Decl::ImportList is Decl {
+  has Decl::ImportPath @.paths;
+}
+
+class Decl::ImportPath::Simple is Decl::ImportPath {
+  has Str @.path;
+}
+
+class Decl::ImportPath::Spread is Decl::ImportPath {
+  has Str @.path;
+  has Str @.spread;
+}
 
 class Parameter_ is export {
   has Str $.name;

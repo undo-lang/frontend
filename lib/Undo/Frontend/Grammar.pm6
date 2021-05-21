@@ -7,10 +7,14 @@ my @infix-operators = <++ + - *>;
 
 token TOP { <lines> }
 
-#proto token decl { * }
-#token decl:sym<import> { <import> }
-#token decl:sym<fn> { <fn-decl> }
-#token decl:sym<var> { <var-decl> }
+rule import-path {
+  <id> + %% '.'
+  ['{' ~ '}' ['' $<spread>=<.id>] + %% ',' '']?
+}
+
+rule import {
+  <import-path> + %% ','
+}
 
 rule var-decl {
   <id> + %% ','
@@ -39,6 +43,7 @@ rule line {
   '' [
   | 'fn': <fn-decl>
   | 'var': <var-decl>
+  | 'import': <import>
   | <outer-expr>
   ]? ''
 }
@@ -85,6 +90,7 @@ token literal:sym<num> {
   '-'? <[0..9]> +
 }
 token literal:sym<str> { <string> }
+
 # -- Section from JSON::Tiny
 token string {
     (:ignoremark '"') ~ \" [ <str> | \\ <str=.str_escape> ]*
