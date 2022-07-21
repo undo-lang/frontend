@@ -6,6 +6,14 @@ use JSON::Tiny;
 
 subset File of Str where .IO.e && !.IO.d;
 
+#| Parse stdin
+multi MAIN("-") {
+  my $parse-tree = parse(slurp);
+  die "Parse error" unless $parse-tree;
+  my %ast = serialize-ast($parse-tree);
+  say to-json(%ast);
+}
+
 #| Parse a whole file
 multi MAIN(File $file) {
   my $parse-tree = parse(slurp $file);

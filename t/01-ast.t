@@ -1,3 +1,4 @@
+#!/usr/bin/env raku
 use lib 'lib/';
 use Test;
 use JSON::Fast;
