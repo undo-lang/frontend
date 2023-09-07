@@ -2,7 +2,7 @@
 use lib 'lib/';
 use Undo::Frontend;
 use Serialize::Tiny;
-use JSON::Tiny;
+use JSON::Fast;
 
 subset File of Str where .IO.e && !.IO.d;
 

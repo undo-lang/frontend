@@ -15,18 +15,22 @@ method fn-decl($/) {
 }
 
 method import-path($/) {
-  if +$<spread> {
-    make Decl::ImportPath::Spread.new(
-      path => $<id>>>.made>>.name,
+  my @id = flat @*IMPORT-PATH, $<id>>>.made>>.name;
+  my $import = do if +$<spread> {
+    Decl::ImportPath::Spread.new(
+      path => @id,
       spread => $<spread>>>.made>>.name, # ??
     );
   } else {
-    make Decl::ImportPath::Simple.new(path => $<id>>>.made>>.name);
+    Decl::ImportPath::Simple.new(path => @id);
   }
+  make ($import, |$<import-path>>>.made);
 }
 
-method import($/) {
-  make Decl::ImportList.new(paths => $<import-path>>>.made);
+method import-decl($/) {
+  my @*IMPORT-PATH;
+  my @paths = flat flat $<import-path>>>.made;
+  make Decl::ImportList.new(:@paths);
 }
 
 method parameters($/) {
@@ -48,7 +52,7 @@ method lines($/) {
 }
 
 method line($/) {
-  make ($<fn-decl> // $<var-decl> // $<import> // $<outer-expr>).made // Empty;
+  make ($<fn-decl> // $<var-decl> // $<import-decl> // $<outer-expr>).made // Empty;
 }
 
 method id($/) {

@@ -9,11 +9,15 @@ token TOP { <lines> }
 
 rule import-path {
   <id> + %% '.'
-  ['{' ~ '}' ['' $<spread>=<.id>] + %% ',' '']?
+  { temp @*IMPORT-PATH; @*IMPORT-PATH.append: $<id>>>.made>>.name; }
+  [ '(' ~ ')' ['' $<spread>=<.id>] + %% ',' '' ]?
+  [ '{' ~ '}' <import-path> + %% ',' '' ]?
 }
 
-rule import {
-  <import-path> + %% ','
+rule import-decl {
+  [:my @*IMPORT-PATH;
+    <import-path>
+  ] + %% ','
 }
 
 rule var-decl {
@@ -43,7 +47,7 @@ rule line {
   '' [
   | 'fn': <fn-decl>
   | 'var': <var-decl>
-  | 'import': <import>
+  | 'import': <import-decl>
   | <outer-expr>
   ]? ''
 }
