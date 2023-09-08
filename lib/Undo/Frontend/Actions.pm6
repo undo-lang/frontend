@@ -15,14 +15,13 @@ method fn-decl($/) {
 }
 
 method import-path($/) {
-  my @id = flat @*IMPORT-PATH, $<id>>>.made>>.name;
   my $import = do if +$<spread> {
     Decl::ImportPath::Spread.new(
-      path => @id,
+      path => @*IMPORT-PATH,
       spread => $<spread>>>.made>>.name, # ??
     );
   } else {
-    Decl::ImportPath::Simple.new(path => @id);
+    Decl::ImportPath::Simple.new(path => @*IMPORT-PATH);
   }
   make ($import, |$<import-path>>>.made);
 }

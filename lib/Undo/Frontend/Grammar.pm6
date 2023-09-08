@@ -9,7 +9,8 @@ token TOP { <lines> }
 
 rule import-path {
   <id> + %% '.'
-  { temp @*IMPORT-PATH; @*IMPORT-PATH.append: $<id>>>.made>>.name; }
+  :temp @*IMPORT-PATH;
+  { @*IMPORT-PATH.append: $<id>>>.made>>.name; }
   [ '(' ~ ')' ['' $<spread>=<.id>] + %% ',' '' ]?
   [ '{' ~ '}' <import-path> + %% ',' '' ]?
 }
