@@ -1,0 +1,2 @@
+import A.B;
+import A { B { C, D } };

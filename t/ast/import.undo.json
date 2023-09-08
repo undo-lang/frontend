@@ -1,0 +1,51 @@
+{
+  "type": "Block",
+  "body": [
+    {
+      "type": "ImportList",
+      "paths": [
+        {
+          "path": [
+            "A",
+            "B"
+          ],
+          "type": "Simple"
+        }
+      ]
+    },
+    {
+      "type": "ImportList",
+      "paths": [
+        {
+          "path": [
+            "A"
+          ],
+          "type": "Simple"
+        },
+        {
+          "path": [
+            "A",
+            "B"
+          ],
+          "type": "Simple"
+        },
+        {
+          "path": [
+            "A",
+            "B",
+            "C"
+          ],
+          "type": "Simple"
+        },
+        {
+          "path": [
+            "A",
+            "B",
+            "D"
+          ],
+          "type": "Simple"
+        }
+      ]
+    }
+  ]
+}
