@@ -14,7 +14,7 @@ class Name is Expression {
 }
 
 class Name::Qualified is Name {
-  has Str @.module-part;
+  has Str @.module;
   has Str $.name;
 }
 

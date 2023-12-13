@@ -1,52 +1,84 @@
 {
-    "body": [
-        {
-            "condition": {
-                "argument": [
-                    {
-                        "block": {
-                            "body": [
-                                {
-                                    "type": "Num",
-                                    "value": 1
-                                }
-                            ],
-                            "type": "Block"
-                        },
-                        "condition": {
-                            "name": "false",
-                            "type": "Unqualified"
-                        },
-                        "type": "Loop"
-                    }
-                ],
-                "fn": {
-                    "name": "length",
-                    "type": "Unqualified"
+  "body": [
+    {
+      "type": "Conditional",
+      "then": {
+        "body": [
+          {
+            "fn": {
+              "type": "Unqualified",
+              "name": "say"
+            },
+            "argument": [
+              {
+                "value": "hello world!",
+                "type": "String"
+              }
+            ],
+            "type": "Call"
+          }
+        ],
+        "type": "Block"
+      },
+      "condition": {
+        "fn": {
+          "name": "length",
+          "type": "Unqualified"
+        },
+        "type": "Call",
+        "argument": [
+          {
+            "fn": {
+              "module": [
+                "Prelude"
+              ],
+              "type": "Qualified",
+              "name": "++"
+            },
+            "argument": [
+              {
+                "condition": {
+                  "name": "false",
+                  "type": "Unqualified"
                 },
-                "type": "Call"
-            },
-            "else": null,
-            "then": {
-                "body": [
+                "type": "Loop",
+                "block": {
+                  "body": [
                     {
-                        "argument": [
-                            {
-                                "type": "String",
-                                "value": "hello world!"
-                            }
-                        ],
-                        "fn": {
-                            "name": "say",
-                            "type": "Unqualified"
-                        },
-                        "type": "Call"
+                      "value": 1,
+                      "type": "Num"
                     }
-                ],
-                "type": "Block"
-            },
-            "type": "Conditional"
-        }
-    ],
-    "type": "Block"
+                  ],
+                  "type": "Block"
+                }
+              },
+              {
+                "type": "Loop",
+                "condition": {
+                  "name": "true",
+                  "type": "Unqualified"
+                },
+                "block": {
+                  "body": [
+                    {
+                      "value": 1,
+                      "type": "Num"
+                    },
+                    {
+                      "type": "Unqualified",
+                      "name": "break"
+                    }
+                  ],
+                  "type": "Block"
+                }
+              }
+            ],
+            "type": "Call"
+          }
+        ]
+      },
+      "else": null
+    }
+  ],
+  "type": "Block"
 }

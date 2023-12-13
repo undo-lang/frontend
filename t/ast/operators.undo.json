@@ -1,20 +1,18 @@
 {
-  "type": "Block",
   "body": [
     {
       "argument": [
         {
           "type": "Call",
+          "fn": {
+            "type": "Qualified",
+            "name": "/",
+            "module": [
+              "Prelude"
+            ]
+          },
           "argument": [
             {
-              "type": "Call",
-              "fn": {
-                "type": "Qualified",
-                "module-part": [
-                  "Prelude"
-                ],
-                "name": "+"
-              },
               "argument": [
                 {
                   "type": "Num",
@@ -24,20 +22,21 @@
                   "value": 2,
                   "type": "Num"
                 }
-              ]
+              ],
+              "fn": {
+                "type": "Qualified",
+                "name": "+",
+                "module": [
+                  "Prelude"
+                ]
+              },
+              "type": "Call"
             },
             {
-              "type": "Num",
-              "value": 3
+              "value": 3,
+              "type": "Num"
             }
-          ],
-          "fn": {
-            "type": "Qualified",
-            "module-part": [
-              "Prelude"
-            ],
-            "name": "/"
-          }
+          ]
         },
         {
           "value": 4,
@@ -45,35 +44,35 @@
         }
       ],
       "fn": {
-        "type": "Qualified",
-        "module-part": [
+        "name": "*",
+        "module": [
           "Prelude"
         ],
-        "name": "*"
+        "type": "Qualified"
       },
       "type": "Call"
     },
     {
       "argument": [
         {
+          "argument": [
+            {
+              "value": 4,
+              "type": "Num"
+            },
+            {
+              "type": "Num",
+              "value": 5
+            }
+          ],
           "type": "Call",
           "fn": {
             "type": "Qualified",
-            "module-part": [
+            "name": "-",
+            "module": [
               "Prelude"
-            ],
-            "name": "-"
-          },
-          "argument": [
-            {
-              "type": "Num",
-              "value": 4
-            },
-            {
-              "value": 5,
-              "type": "Num"
-            }
-          ]
+            ]
+          }
         },
         {
           "value": 6,
@@ -82,7 +81,7 @@
       ],
       "fn": {
         "type": "Qualified",
-        "module-part": [
+        "module": [
           "Prelude"
         ],
         "name": "<"
@@ -93,6 +92,13 @@
       "argument": [
         {
           "type": "Call",
+          "fn": {
+            "name": ">",
+            "module": [
+              "Prelude"
+            ],
+            "type": "Qualified"
+          },
           "argument": [
             {
               "value": 6,
@@ -102,34 +108,41 @@
               "value": 7,
               "type": "Num"
             }
-          ],
-          "fn": {
-            "type": "Qualified",
-            "name": ">",
-            "module-part": [
-              "Prelude"
-            ]
-          }
+          ]
         },
         {
           "value": 8,
           "type": "Num"
         }
       ],
+      "type": "Call",
       "fn": {
-        "module-part": [
+        "module": [
           "Prelude"
         ],
         "type": "Qualified",
         "name": ">="
-      },
-      "type": "Call"
+      }
     },
     {
+      "fn": {
+        "module": [
+          "Prelude"
+        ],
+        "type": "Qualified",
+        "name": "!="
+      },
       "argument": [
         {
           "argument": [
             {
+              "fn": {
+                "module": [
+                  "Prelude"
+                ],
+                "type": "Qualified",
+                "name": "<="
+              },
               "argument": [
                 {
                   "value": 8,
@@ -140,42 +153,29 @@
                   "value": 9
                 }
               ],
-              "fn": {
-                "name": "<=",
-                "module-part": [
-                  "Prelude"
-                ],
-                "type": "Qualified"
-              },
               "type": "Call"
             },
             {
-              "type": "Num",
-              "value": 10
+              "value": 10,
+              "type": "Num"
             }
           ],
           "fn": {
-            "name": "==",
-            "type": "Qualified",
-            "module-part": [
+            "module": [
               "Prelude"
-            ]
+            ],
+            "type": "Qualified",
+            "name": "=="
           },
           "type": "Call"
         },
         {
-          "value": 11,
-          "type": "Num"
+          "type": "Num",
+          "value": 11
         }
       ],
-      "type": "Call",
-      "fn": {
-        "name": "!=",
-        "module-part": [
-          "Prelude"
-        ],
-        "type": "Qualified"
-      }
+      "type": "Call"
     }
-  ]
+  ],
+  "type": "Block"
 }

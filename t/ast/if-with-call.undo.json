@@ -1,51 +1,102 @@
 {
-    "body": [
+  "type": "Block",
+  "body": [
+    {
+      "type": "Fn",
+      "parameter": [
         {
-            "condition": {
-                "argument": [
-                    {
-                        "type": "Num",
-                        "value": 3
-                    },
-                    {
-                        "name": "b",
-                        "type": "Unqualified"
-                    }
-                ],
-                "fn": {
-                    "name": "bar",
-                    "type": "Unqualified"
-                },
-                "type": "Call"
-            },
+          "name": "x",
+          "type": "Parameter"
+        }
+      ],
+      "body": {
+        "body": [
+          {
             "else": {
-                "body": [
+              "type": "Block",
+              "body": [
+                {
+                  "type": "Call",
+                  "argument": [
                     {
-                        "argument": [],
-                        "fn": {
-                            "name": "y",
-                            "type": "Unqualified"
-                        },
-                        "type": "Call"
+                      "value": "Else",
+                      "type": "String"
                     }
-                ],
-                "type": "Block"
+                  ],
+                  "fn": {
+                    "name": "print",
+                    "type": "Unqualified"
+                  }
+                }
+              ]
             },
             "then": {
-                "body": [
+              "body": [
+                {
+                  "type": "Call",
+                  "argument": [
                     {
-                        "argument": [],
-                        "fn": {
-                            "name": "x",
-                            "type": "Unqualified"
-                        },
-                        "type": "Call"
+                      "type": "String",
+                      "value": "Then"
                     }
-                ],
-                "type": "Block"
+                  ],
+                  "fn": {
+                    "name": "print",
+                    "type": "Unqualified"
+                  }
+                }
+              ],
+              "type": "Block"
             },
-            "type": "Conditional"
+            "type": "Conditional",
+            "condition": {
+              "type": "Unqualified",
+              "name": "x"
+            }
+          }
+        ],
+        "type": "Block"
+      },
+      "name": "bar"
+    },
+    {
+      "fn": {
+        "type": "Unqualified",
+        "name": "print"
+      },
+      "argument": [
+        {
+          "type": "String",
+          "value": "If"
         }
-    ],
-    "type": "Block"
+      ],
+      "type": "Call"
+    },
+    {
+      "type": "Call",
+      "argument": [
+        {
+          "value": 1,
+          "type": "Num"
+        }
+      ],
+      "fn": {
+        "name": "bar",
+        "type": "Unqualified"
+      }
+    },
+    {
+      "fn": {
+        "type": "Unqualified",
+        "name": "bar"
+      },
+      "argument": [
+        {
+          "type": "Num",
+          "value": 0
+        }
+      ],
+      "type": "Call"
+    }
+  ]
 }

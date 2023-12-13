@@ -1,5 +1,11 @@
-if bar(3, b) {
-  x()
-} else {
-  y()
-}
+fn bar(x) {
+  if x {
+    print("Then");
+  } else {
+    print("Else");
+  }
+};
+
+print("If");
+bar(1);
+bar(0);

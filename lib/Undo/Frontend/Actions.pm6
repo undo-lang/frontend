@@ -68,7 +68,7 @@ method outer-expr($/) {
   for $<call-expr>.skip(1) -> $next {
     my $op = ~$<infix>[$++];
     $val = Expression::Call.new(
-      fn => Name::Qualified.new(module-part => ("Prelude",), name => ~$op),
+      fn => Name::Qualified.new(module => ("Prelude",), name => ~$op),
       argument => ($val, $next.made)
     );
   }

@@ -1,39 +1,68 @@
 {
-    "body": [
+  "type": "Block",
+  "body": [
+    {
+      "argument": [
         {
-            "argument": [
-                {
-                    "condition": {
-                        "name": "True",
-                        "type": "Unqualified"
-                    },
-                    "else": {
-                        "body": [
-                            {
-                                "type": "Num",
-                                "value": 1
-                            }
-                        ],
-                        "type": "Block"
-                    },
-                    "then": {
-                        "body": [
-                            {
-                                "type": "Num",
-                                "value": 0
-                            }
-                        ],
-                        "type": "Block"
-                    },
-                    "type": "Conditional"
-                }
-            ],
-            "fn": {
-                "name": "print",
+          "argument": [
+            {
+              "then": {
+                "body": [
+                  {
+                    "value": 0,
+                    "type": "Num"
+                  }
+                ],
+                "type": "Block"
+              },
+              "type": "Conditional",
+              "else": {
+                "body": [
+                  {
+                    "type": "Num",
+                    "value": 1
+                  }
+                ],
+                "type": "Block"
+              },
+              "condition": {
+                "name": "True",
                 "type": "Unqualified"
+              }
             },
-            "type": "Call"
+            {
+              "type": "Conditional",
+              "else": null,
+              "then": {
+                "body": [
+                  {
+                    "type": "Unqualified",
+                    "name": "True"
+                  }
+                ],
+                "type": "Block"
+              },
+              "condition": {
+                "value": 2,
+                "type": "Num"
+              }
+            }
+          ],
+          "type": "Call",
+          "fn": {
+            "name": "+",
+            "module": [
+              "Prelude"
+            ],
+            "type": "Qualified"
+          }
         }
-    ],
-    "type": "Block"
+      ],
+      "fn": {
+        "name": "print",
+        "type": "Unqualified"
+      },
+      "type": "Call"
+    }
+  ]
 }

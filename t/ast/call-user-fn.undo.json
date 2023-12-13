@@ -1,46 +1,62 @@
 {
-    "body": [
-        {
-            "body": {
-                "body": [
-                    {
-                        "name": "x",
-                        "type": "Unqualified"
-                    }
-                ],
-                "type": "Block"
-            },
-            "name": "a",
-            "parameter": [
-                {
-                    "name": "x",
-                    "type": "Parameter"
-                }
-            ],
-            "type": "Fn"
-        },
-        {
+  "body": [
+    {
+      "name": "a",
+      "type": "Fn",
+      "body": {
+        "type": "Block",
+        "body": [
+          {
             "argument": [
-                {
-                    "argument": [
-                        {
-                            "type": "Num",
-                            "value": 1
-                        }
-                    ],
-                    "fn": {
-                        "name": "a",
-                        "type": "Unqualified"
-                    },
-                    "type": "Call"
-                }
-            ],
-            "fn": {
-                "name": "print",
+              {
+                "name": "x",
                 "type": "Unqualified"
-            },
-            "type": "Call"
+              },
+              {
+                "value": 2,
+                "type": "Num"
+              }
+            ],
+            "type": "Call",
+            "fn": {
+              "module": [
+                "Prelude"
+              ],
+              "type": "Qualified",
+              "name": "+"
+            }
+          }
+        ]
+      },
+      "parameter": [
+        {
+          "type": "Parameter",
+          "name": "x"
         }
-    ],
-    "type": "Block"
+      ]
+    },
+    {
+      "fn": {
+        "type": "Unqualified",
+        "name": "print"
+      },
+      "argument": [
+        {
+          "fn": {
+            "name": "a",
+            "type": "Unqualified"
+          },
+          "argument": [
+            {
+              "value": 1,
+              "type": "Num"
+            }
+          ],
+          "type": "Call"
+        }
+      ],
+      "type": "Call"
+    }
+  ],
+  "type": "Block"
 }
