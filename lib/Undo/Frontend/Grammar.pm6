@@ -3,7 +3,16 @@ unit grammar Undo::Frontend::Grammar;
 # note: empty quotes ('') are used to apply the <.ws> token
 #       inside of `rule`s
 
-my @infix-operators = <++ + - *>;
+# TODO unicode
+my %unicode =
+  '×' => '*',
+  '≤' => '<=',
+  '≥' => '>=',
+  '≠' => '!=',
+  ;
+
+# This is interpolated using `||`, so longer first.
+my @infix-operators = «++ <= >= == != + - * / < >»;
 
 token TOP { <lines> }
 

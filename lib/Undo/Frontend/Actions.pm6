@@ -18,17 +18,17 @@ method import-path($/) {
   my $import = do if +$<spread> {
     Decl::ImportPath::Spread.new(
       path => @*IMPORT-PATH,
-      spread => $<spread>>>.made>>.name, # ??
+      spread => $<spread>».made».name, # ??
     );
   } else {
     Decl::ImportPath::Simple.new(path => @*IMPORT-PATH);
   }
-  make ($import, |$<import-path>>>.made);
+  make ($import, |$<import-path>».made);
 }
 
 method import-decl($/) {
   my @*IMPORT-PATH;
-  my @paths = flat flat $<import-path>>>.made;
+  my @paths = flat flat $<import-path>».made;
   make Decl::ImportList.new(:@paths);
 }
 
@@ -39,7 +39,7 @@ method parameters($/) {
 method decl:sym<var> ($/) { make $<var-decl>.made; }
 
 method var-decl($/) {
-  make $/<id>>>.map({ Decl::Variable.new(id => $_) });
+  make $/<id>».map({ Decl::Variable.new(id => $_) });
 }
 
 method block($/) {
@@ -47,7 +47,7 @@ method block($/) {
 }
 
 method lines($/) {
-  make $<line>>>.made;
+  make $<line>».made;
 }
 
 method line($/) {
@@ -61,12 +61,18 @@ method id($/) {
 
 method outer-expr($/) {
   # !!!!
-  # TODO
+  # TODO precedence
   # !!!!
-  # manage infixes
 
-# DISCARD THE REST CURRENTLY
-  make $<call-expr>[0].made;
+  my $val = $<call-expr>[0].made;
+  for $<call-expr>.skip(1) -> $next {
+    my $op = ~$<infix>[$++];
+    $val = Expression::Call.new(
+      fn => Name::Qualified.new(module-part => ("Prelude",), name => ~$op),
+      argument => ($val, $next.made)
+    );
+  }
+  make $val
 }
 
 method inner-expr:if ($/) {
@@ -120,7 +126,7 @@ method literal:sym<str>($/) {
 method string($/) {
     my $str =  +@$<str> == 1
         ?? $<str>[0].made
-        !! $<str>>>.made.join;
+        !! $<str>».made.join;
 
     # see https://github.com/moritz/json/issues/25
     # when a combining character comes after an opening quote,
