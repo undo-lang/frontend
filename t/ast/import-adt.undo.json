@@ -1,0 +1,31 @@
+{
+  "type": "Block",
+  "body": [
+    {
+      "type": "ImportList",
+      "paths": [
+        {
+          "type": "ImportPath",
+          "path": [
+            "Data",
+            "Maybe"
+          ],
+          "elements": [
+            {
+              "name": "isJust",
+              "type": "ImportElement"
+            },
+            {
+              "name": "Maybe",
+              "type": "ADT",
+              "constructor": [
+                "Just",
+                "Nothing"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

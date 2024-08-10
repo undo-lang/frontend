@@ -14,15 +14,27 @@ method fn-decl($/) {
   );
 }
 
-method import-path($/) {
-  my $import = do if +$<spread> {
-    Decl::ImportPath::Spread.new(
-      path => @*IMPORT-PATH,
-      spread => $<spread>».made».name, # ??
+method import-element($/) {
+  if $<constructors> {
+    make Decl::ImportElement::ADT.new(
+      name => $<id>.made.name,
+      constructor => $<constructors>.map(*.made.name)
     );
   } else {
-    Decl::ImportPath::Simple.new(path => @*IMPORT-PATH);
+    make Decl::ImportElement.new(
+      name => $<id>.made.name
+    );
   }
+}
+
+method import-path($/) {
+  # XXX Error on `A ()`
+  my $import = Decl::ImportPath.new(
+    path => @*IMPORT-PATH,
+    elements => $<elements>».made
+  );
+  # XXX could probably remove the dynamic variable in the grammar, and add a prefix
+  #     to all $<import-path> here
   make ($import, |$<import-path>».made);
 }
 

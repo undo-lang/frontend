@@ -9,7 +9,8 @@
             "A",
             "B"
           ],
-          "type": "Simple"
+          "elements": [],
+          "type": "ImportPath"
         }
       ]
     },
@@ -20,14 +21,16 @@
           "path": [
             "A"
           ],
-          "type": "Simple"
+          "elements": [],
+          "type": "ImportPath"
         },
         {
           "path": [
             "A",
             "B"
           ],
-          "type": "Simple"
+          "elements": [],
+          "type": "ImportPath"
         },
         {
           "path": [
@@ -35,7 +38,8 @@
             "B",
             "C"
           ],
-          "type": "Simple"
+          "elements": [],
+          "type": "ImportPath"
         },
         {
           "path": [
@@ -43,7 +47,8 @@
             "B",
             "D"
           ],
-          "type": "Simple"
+          "elements": [],
+          "type": "ImportPath"
         }
       ]
     }

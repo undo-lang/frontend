@@ -20,8 +20,13 @@ rule import-path {
   <id> + %% '.'
   :temp @*IMPORT-PATH;
   { @*IMPORT-PATH.append: $<id>>>.made>>.name; }
-  [ '(' ~ ')' ['' $<spread>=<.id>] + %% ',' '' ]?
+  [ '(' ~ ')' ['' $<elements>=<.import-element>] + %% ',' '' ]?
   [ '{' ~ '}' <import-path> + %% ',' '' ]?
+}
+
+rule import-element {
+  <id>
+  [ '(' ~ ')' ['' $<constructors>=<.id>] + %% ',' '' ]?
 }
 
 rule import-decl {

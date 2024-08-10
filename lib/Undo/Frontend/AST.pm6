@@ -1,37 +1,37 @@
 unit module Undo::Frontend::AST;
 
-class Line {
+role Line {
   #submethod BUILD { ... }
 }
 
 # expressions
-class Expression is Line {
+role Expression does Line {
   #submethod BUILD { ... }
 }
 
-class Name is Expression {
+role Name does Expression {
   #submethod BUILD { ... }
 }
 
-class Name::Qualified is Name {
+class Name::Qualified does Name {
   has Str @.module;
   has Str $.name;
 }
 
-class Name::Unqualified is Name {
+class Name::Unqualified does Name {
   has Str $.name;
 }
 
 # the literals!
-class Literal is Expression {
+role Literal does Expression {
   #submethod BUILD { ... }
 }
 
-class Literal::Num is Literal {
+class Literal::Num does Literal {
   has Int $.value;
 }
 
-class Literal::String is Literal {
+class Literal::String does Literal {
   has Str $.value;
 }
 
@@ -41,48 +41,50 @@ class Literal::String is Literal {
 
 # declarations
 
-# TODO: seems like there's a rakudo bug that prevents me from calling this "Block"... dunno which name I'm gonna use instead
+# Can't be called "Block"
 class Block_ is export {
   has Line @.body;
 }
 
-class Expression::Call is Expression {
+class Expression::Call does Expression {
   has Expression $.fn;
   has Expression @.argument;
 }
 
-class Expression::Conditional is Expression {
+class Expression::Conditional does Expression {
   has Expression $.condition; # TODO use something else?
   has Block_ $.then;
   has Block_ $.else;
 }
 
-class Expression::Loop is Expression {
+class Expression::Loop does Expression {
   has Expression $.condition;
   has Block_ $.block;
 }
 
-class Decl is Line {
+role Decl does Line {
   # submethod BUILD { ... }
 }
 
-class Decl::Variable is Decl {
+class Decl::Variable does Decl {
   has Name::Unqualified $.name;
 }
 
-class Decl::ImportPath {}
+class Decl::ImportElement {
+  has Str $.name;
+}
 
-class Decl::ImportList is Decl {
+class Decl::ImportElement::ADT is Decl::ImportElement {
+  has Str @.constructor;
+}
+
+class Decl::ImportPath {
+  has Str @.path;
+  has Decl::ImportElement @.elements;
+}
+
+class Decl::ImportList does Decl {
   has Decl::ImportPath @.paths;
-}
-
-class Decl::ImportPath::Simple is Decl::ImportPath {
-  has Str @.path;
-}
-
-class Decl::ImportPath::Spread is Decl::ImportPath {
-  has Str @.path;
-  has Str @.spread;
 }
 
 class Parameter_ is export {
