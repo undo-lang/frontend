@@ -8,21 +8,21 @@ method decl:sym<fn> ($/) { make $<fn-decl>.made; }
 
 method fn-decl($/) {
   make Fn.new(
-    name => $<id>.made.name,
-    parameter => $<parameters>.made,
-    body => $<block>.made,
+    :name($<id>.made.name),
+    :parameter($<parameters>.made),
+    :body($<block>.made),
   );
 }
 
 method import-element($/) {
   if $<constructors> {
     make Decl::ImportElement::ADT.new(
-      name => $<id>.made.name,
-      constructor => $<constructors>.map(*.made.name)
+      :name($<id>.made.name),
+      :constructor($<constructors>.map(*.made.name))
     );
   } else {
     make Decl::ImportElement.new(
-      name => $<id>.made.name
+      :name($<id>.made.name)
     );
   }
 }
@@ -30,8 +30,8 @@ method import-element($/) {
 method import-path($/) {
   # XXX Error on `A ()`
   my $import = Decl::ImportPath.new(
-    path => @*IMPORT-PATH,
-    elements => $<elements>».made
+    :path(@*IMPORT-PATH),
+    :elements($<elements>».made)
   );
   # XXX could probably remove the dynamic variable in the grammar, and add a prefix
   #     to all $<import-path> here
@@ -80,8 +80,8 @@ method outer-expr($/) {
   for $<call-expr>.skip(1) -> $next {
     my $op = ~$<infix>[$++];
     $val = Expression::Call.new(
-      fn => Name::Qualified.new(module => ("Prelude",), name => ~$op),
-      argument => ($val, $next.made)
+      :fn(Name::Qualified.new(module => ("Prelude",), name => ~$op)),
+      :argument(($val, $next.made))
     );
   }
   make $val
@@ -99,6 +99,33 @@ method inner-expr:loop ($/) {
   make Expression::Loop.new(
     :condition($<cond>.made),
     :block($<body>.made),
+  );
+}
+
+method match-subject($/) {
+  if ~$<fields> {
+    make Expression::MatchSubject::Constructor.new(
+      :constructor($<id>.made.name),
+      :sub($<match-subject>».made)
+    );
+  } else {
+    make Expression::MatchSubject::Variable.new(
+      :variable($<id>.made.name)
+    );
+  }
+}
+
+method match-branch($/) {
+  make Expression::MatchBranch.new(
+    :subject($<match-subject>.made),
+    :block($<block>.made),
+  );
+}
+
+method inner-expr:match ($/) {
+  make Expression::Match.new(
+    :topic($<topic>.made),
+    :branch($<match-branch>».made),
   );
 }
 

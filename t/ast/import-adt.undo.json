@@ -1,8 +1,6 @@
 {
-  "type": "Block",
   "body": [
     {
-      "type": "ImportList",
       "paths": [
         {
           "type": "ImportPath",
@@ -16,16 +14,112 @@
               "type": "ImportElement"
             },
             {
-              "name": "Maybe",
               "type": "ADT",
               "constructor": [
                 "Just",
                 "Nothing"
-              ]
+              ],
+              "name": "Maybe"
             }
           ]
         }
-      ]
+      ],
+      "type": "ImportList"
+    },
+    {
+      "type": "Fn",
+      "parameter": [
+        {
+          "name": "x",
+          "type": "Parameter"
+        }
+      ],
+      "body": {
+        "type": "Block",
+        "body": [
+          {
+            "branch": [
+              {
+                "subject": {
+                  "sub": [
+                    {
+                      "sub": [
+                        {
+                          "variable": "x",
+                          "type": "Variable"
+                        }
+                      ],
+                      "type": "Constructor",
+                      "constructor": "Just"
+                    }
+                  ],
+                  "constructor": "Just",
+                  "type": "Constructor"
+                },
+                "type": "MatchBranch",
+                "block": {
+                  "type": "Block",
+                  "body": [
+                    {
+                      "type": "Unqualified",
+                      "name": "x"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "MatchBranch",
+                "block": {
+                  "body": [
+                    {
+                      "value": 1,
+                      "type": "Num"
+                    }
+                  ],
+                  "type": "Block"
+                },
+                "subject": {
+                  "type": "Constructor",
+                  "sub": [
+                    {
+                      "type": "Constructor",
+                      "sub": [
+                      ],
+                      "constructor": "Nothing"
+                    }
+                  ],
+                  "constructor": "Just"
+                }
+              },
+              {
+                "block": {
+                  "type": "Block",
+                  "body": [
+                    {
+                      "type": "Num",
+                      "value": 0
+                    }
+                  ]
+                },
+                "subject": {
+                  "type": "Constructor",
+                  "sub": [
+                  ],
+                  "constructor": "Nothing"
+                },
+                "type": "MatchBranch"
+              }
+            ],
+            "type": "Match",
+            "topic": {
+              "name": "x",
+              "type": "Unqualified"
+            }
+          }
+        ]
+      },
+      "name": "zero"
     }
-  ]
+  ],
+  "type": "Block"
 }

@@ -1,1 +1,9 @@
 import Data.Maybe (isJust, Maybe(Just, Nothing));
+
+fn zero(x) {
+  match x {
+    Just(Just(x)) => { x; },
+    Just(Nothing()) => { 1; },
+    Nothing() => { 0; }
+  }
+};

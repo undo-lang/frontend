@@ -62,6 +62,28 @@ class Expression::Loop does Expression {
   has Block_ $.block;
 }
 
+role Expression::MatchSubject {
+}
+
+class Expression::MatchSubject::Variable does Expression::MatchSubject {
+  has Str $.variable;
+}
+
+class Expression::MatchSubject::Constructor does Expression::MatchSubject {
+  has Str $.constructor;
+  has Expression::MatchSubject @.sub;
+}
+
+class Expression::MatchBranch {
+  has Expression::MatchSubject $.subject;
+  has Block_ $.block;
+}
+
+class Expression::Match does Expression {
+  has Expression $.topic;
+  has Expression::MatchBranch @.branch;
+}
+
 role Decl does Line {
   # submethod BUILD { ... }
 }

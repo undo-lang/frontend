@@ -93,6 +93,25 @@ rule inner-expr:if {
 rule  inner-expr:loop {
   'loop' <cond=.outer-expr> <body=.block>
 }
+
+rule match-subject {
+  <id>
+  $<fields>=[
+    '(' ~ ')'
+    ['' <match-subject> ''] * %% ',' ''
+  ]?
+}
+
+rule match-branch {
+  <match-subject>
+  '=>'
+  <block>
+}
+rule inner-expr:match {
+  'match' <topic=.outer-expr>
+  '{' ~ '}' [ ['' <match-branch> ''] + %% ',' '' ]
+}
+
 token inner-expr:id { <id> }
 token inner-expr:literal { <literal> }
 token inner-expr:parens {
