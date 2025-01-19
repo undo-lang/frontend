@@ -1,6 +1,8 @@
 {
+  "type": "Block",
   "body": [
     {
+      "type": "ImportList",
       "paths": [
         {
           "type": "ImportPath",
@@ -10,8 +12,8 @@
           ],
           "elements": [
             {
-              "name": "isJust",
-              "type": "ImportElement"
+              "type": "ImportElement",
+              "name": "isJust"
             },
             {
               "type": "ADT",
@@ -23,8 +25,7 @@
             }
           ]
         }
-      ],
-      "type": "ImportList"
+      ]
     },
     {
       "type": "Fn",
@@ -34,29 +35,31 @@
           "type": "Parameter"
         }
       ],
+      "name": "zero",
       "body": {
         "type": "Block",
         "body": [
           {
+            "type": "Match",
             "branch": [
               {
+                "type": "MatchBranch",
                 "subject": {
+                  "type": "Constructor",
+                  "constructor": "Just",
                   "sub": [
                     {
+                      "type": "Constructor",
                       "sub": [
                         {
-                          "variable": "x",
-                          "type": "Variable"
+                          "type": "Variable",
+                          "variable": "x"
                         }
                       ],
-                      "type": "Constructor",
                       "constructor": "Just"
                     }
-                  ],
-                  "constructor": "Just",
-                  "type": "Constructor"
+                  ]
                 },
-                "type": "MatchBranch",
                 "block": {
                   "type": "Block",
                   "body": [
@@ -70,13 +73,13 @@
               {
                 "type": "MatchBranch",
                 "block": {
+                  "type": "Block",
                   "body": [
                     {
-                      "value": 1,
-                      "type": "Num"
+                      "type": "Num",
+                      "value": 1
                     }
-                  ],
-                  "type": "Block"
+                  ]
                 },
                 "subject": {
                   "type": "Constructor",
@@ -92,6 +95,7 @@
                 }
               },
               {
+                "type": "MatchBranch",
                 "block": {
                   "type": "Block",
                   "body": [
@@ -106,20 +110,16 @@
                   "sub": [
                   ],
                   "constructor": "Nothing"
-                },
-                "type": "MatchBranch"
+                }
               }
             ],
-            "type": "Match",
             "topic": {
               "name": "x",
               "type": "Unqualified"
             }
           }
         ]
-      },
-      "name": "zero"
+      }
     }
-  ],
-  "type": "Block"
+  ]
 }

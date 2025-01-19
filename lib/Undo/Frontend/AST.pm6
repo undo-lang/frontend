@@ -39,8 +39,6 @@ class Literal::String does Literal {
 #  has Name $.name;
 #}
 
-# declarations
-
 # Can't be called "Block"
 class Block_ is export {
   has Line @.body;
@@ -109,12 +107,25 @@ class Decl::ImportList does Decl {
   has Decl::ImportPath @.paths;
 }
 
-class Parameter_ is export {
+class Decl::Parameter_ is export {
   has Str $.name;
 }
 
-class Fn is Decl is export {
+class Decl::Fn does Decl is export {
   has Str $.name;
-  has Parameter_ @.parameter;
+  has Decl::Parameter_ @.parameter;
   has Block_ $.body;
+}
+
+class Decl::Enum { ... }
+
+# TODO split ByPosVariant/StructVariant?
+class Decl::Enum::Variant {
+  has Str $.name;
+  has Str @.parameter;
+}
+
+class Decl::Enum does Decl {
+  has Str $.name;
+  has Decl::Enum::Variant @.variant;
 }

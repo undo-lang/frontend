@@ -1,0 +1,21 @@
+{
+  "type": "Block",
+  "body": [
+    {
+      "type": "Enum",
+      "name": "Maybe",
+      "variant": [
+        {
+          "type": "Variant",
+          "name": "Just",
+          "parameter": ["value"]
+        },
+        {
+          "type": "Variant",
+          "name": "Nothing",
+          "parameter": []
+        }
+      ]
+    }
+  ]
+}

@@ -25,7 +25,7 @@ rule import-path {
 }
 
 rule import-element {
-  <id>
+  <id> ''
   [ '(' ~ ')' ['' $<constructors>=<.id>] + %% ',' '' ]?
 }
 
@@ -45,6 +45,21 @@ rule fn-decl {
   <block>
 }
 
+# TODO parse structs/struct-likes?
+rule enum-variant {
+  <id> ''
+  [ '(' ~ ')'
+    [ '' $<param>=<.id> ] * %% ','
+  ]?
+}
+
+rule enum-decl {
+  <id>
+  <.ws>
+  '{' ~ '}'
+  <enum-variant> + %% ','
+}
+
 token parameters {
   # TODO default values
   <id>* %% [<.ws> ',' <.ws>]
@@ -57,12 +72,14 @@ token block {
 token lines {
   <line> * %% ";"
 }
+
 rule line {
   :ratchet
   '' [
   | 'fn': <fn-decl>
   | 'var': <var-decl>
   | 'import': <import-decl>
+  | 'enum': <enum-decl>
   | <outer-expr>
   ]? ''
 }

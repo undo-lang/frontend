@@ -48,10 +48,24 @@ method parameters($/) {
   make $<id>.list.map(-> $id { Parameter_.new(name => $id.made.name) });
 }
 
-method decl:sym<var> ($/) { make $<var-decl>.made; }
-
 method var-decl($/) {
-  make $/<id>».map({ Decl::Variable.new(id => $_) });
+  make $<id>».map({ Decl::Variable.new(id => $_) });
+}
+
+method enum-variant($/) {
+  # XXX error on `Nothing()`
+  my @param = $<param> ?? $<param>».Str !! ();
+  make Decl::Enum::Variant.new(
+    :name(~$<id>),
+    :parameter(@param)
+  );
+}
+
+method enum-decl($/) {
+  make Decl::Enum.new(
+    :name(~$<id>),
+    :variant($<enum-variant>».made)
+  );
 }
 
 method block($/) {
@@ -63,7 +77,7 @@ method lines($/) {
 }
 
 method line($/) {
-  make ($<fn-decl> // $<var-decl> // $<import-decl> // $<outer-expr>).made // Empty;
+  make ($<fn-decl> // $<var-decl> // $<import-decl> // $<enum-decl> // $<outer-expr>).made // Empty;
 }
 
 method id($/) {
