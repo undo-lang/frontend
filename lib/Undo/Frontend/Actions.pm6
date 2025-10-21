@@ -164,7 +164,7 @@ method instantiate-field($/) {
 method inner-expr:id-or-instantiate ($/) {
   with $<instantiate> {
     make Expression::Instantiate.new(
-      :name(~$<id>),
+      :name($<id>.made),
       :field(.<instantiate-field>».made)
     );
   } else {
