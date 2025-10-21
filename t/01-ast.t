@@ -20,7 +20,7 @@ for dir('t/ast') { # TODO base on current dir
     next;
   }
   my %expected = from-json(slurp $expected);
-  is-deeply %serialized, %expected, "$_ => $expected";
+  is-deeply %serialized, %expected, "file: $_";
 }
 
 done-testing;

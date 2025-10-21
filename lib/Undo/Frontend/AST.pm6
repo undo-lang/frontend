@@ -66,7 +66,7 @@ class Expression::InstantiateField {
 }
 
 class Expression::Instantiate does Expression {
-  has Name $.name;
+  has Str $.name;
   has Expression::InstantiateField @.field;
 }
 

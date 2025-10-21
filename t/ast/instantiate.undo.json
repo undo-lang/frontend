@@ -5,10 +5,7 @@
       "init": {
         "field": [
         ],
-        "name": {
-          "name": "Nothing",
-          "type": "Unqualified"
-        },
+        "name": "Nothing",
         "type": "Instantiate"
       },
       "type": "Variable"
@@ -26,10 +23,7 @@
             }
           }
         ],
-        "name": {
-          "type": "Unqualified",
-          "name": "Just"
-        },
+        "name": "Just",
         "type": "Instantiate"
       },
       "type": "Variable"
