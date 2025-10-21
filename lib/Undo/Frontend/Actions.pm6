@@ -154,8 +154,8 @@ method inner-expr:match ($/) {
   );
 }
 
-method field($/) {
-  make Expression::InstanteField.new(
+method instantiate-field($/) {
+  make Expression::InstantiateField.new(
     :field(~$<id>),
     :value($<expr>.made),
   )

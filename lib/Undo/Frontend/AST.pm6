@@ -61,12 +61,12 @@ class Expression::Loop does Expression {
 }
 
 class Expression::InstantiateField {
-    has Str $.field;
-    has Expression $.value;
+  has Str $.field;
+  has Expression $.value;
 }
 
 class Expression::Instantiate does Expression {
-  has Name $.str;
+  has Name $.name;
   has Expression::InstantiateField @.field;
 }
 

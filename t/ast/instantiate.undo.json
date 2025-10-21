@@ -1,25 +1,38 @@
 {
   "body": [
     {
-      "type": "Variable",
+      "name": "a",
       "init": {
-        "str": null,
-        "type": "Instantiate",
         "field": [
-        ]
+        ],
+        "name": {
+          "name": "Nothing",
+          "type": "Unqualified"
+        },
+        "type": "Instantiate"
       },
-      "name": "a"
+      "type": "Variable"
     },
     {
-      "type": "Variable",
       "name": "b",
       "init": {
-        "type": "Instantiate",
         "field": [
-          null
+          {
+            "field": "value",
+            "type": "InstantiateField",
+            "value": {
+              "type": "Num",
+              "value": 1
+            }
+          }
         ],
-        "str": null
-      }
+        "name": {
+          "type": "Unqualified",
+          "name": "Just"
+        },
+        "type": "Instantiate"
+      },
+      "type": "Variable"
     }
   ],
   "type": "Block"
