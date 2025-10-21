@@ -1,5 +1,4 @@
 unit grammar Undo::Frontend::Grammar;
-
 # note: empty quotes ('') are used to apply the <.ws> token
 #       inside of `rule`s
 
@@ -97,7 +96,7 @@ rule outer-expr { ['' <call-expr> '']+ % <infix> }
 
 regex call-expr {
   <inner-expr>
-  [ '(' <exprlist> ')' ]*
+  [ '(' ~ ')' <exprlist> ]*
 }
 
 proto regex inner-expr { * }
@@ -113,7 +112,7 @@ rule  inner-expr:loop {
 
 rule match-subject {
   <id>
-  $<fields>=[
+  $<field>=[
     '(' ~ ')'
     ['' <match-subject> ''] * %% ',' ''
   ]?
@@ -131,7 +130,10 @@ rule inner-expr:match {
 
 token inner-expr:id-or-instantiate {
     <id>
-    [ $<instantiate>='{' ~ '}' [<.ws> <field> <.ws>] * %% ',' <.ws> ]?
+    $<instantiate>=( <.ws>
+        '{' ~ '}'
+        [<.ws> <instantiate-field> <.ws>] * %% ',' <.ws>
+    )?
 }
 token inner-expr:literal { <literal> }
 token inner-expr:parens {
@@ -142,7 +144,7 @@ token exprlist {
   <outer-expr>* %% ','
 }
 
-token field {
+token instantiate-field {
     <id> <.ws>
     ':' <.ws>
     <expr=.outer-expr>

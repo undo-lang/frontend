@@ -60,6 +60,16 @@ class Expression::Loop does Expression {
   has Block_ $.block;
 }
 
+class Expression::InstantiateField {
+    has Str $.field;
+    has Expression $.value;
+}
+
+class Expression::Instantiate does Expression {
+  has Name $.str;
+  has Expression::InstantiateField @.field;
+}
+
 role Expression::MatchSubject {
 }
 

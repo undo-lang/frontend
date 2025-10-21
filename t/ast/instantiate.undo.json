@@ -1,0 +1,26 @@
+{
+  "body": [
+    {
+      "type": "Variable",
+      "init": {
+        "str": null,
+        "type": "Instantiate",
+        "field": [
+        ]
+      },
+      "name": "a"
+    },
+    {
+      "type": "Variable",
+      "name": "b",
+      "init": {
+        "type": "Instantiate",
+        "field": [
+          null
+        ],
+        "str": null
+      }
+    }
+  ],
+  "type": "Block"
+}

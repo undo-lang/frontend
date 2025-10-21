@@ -128,7 +128,7 @@ method inner-expr:loop ($/) {
 }
 
 method match-subject($/) {
-  if ~$<fields> {
+  if ~$<field> {
     make Expression::MatchSubject::Constructor.new(
       :constructor($<id>.made.name),
       :sub($<match-subject>».made)
@@ -154,9 +154,19 @@ method inner-expr:match ($/) {
   );
 }
 
+method field($/) {
+  make Expression::InstanteField.new(
+    :field(~$<id>),
+    :value($<expr>.made),
+  )
+}
+
 method inner-expr:id-or-instantiate ($/) {
-  if $<instantiate> {
-    die "instantiate NYI: '$(~$<instantiate>)'";
+  with $<instantiate> {
+    make Expression::Instantiate.new(
+      :name($<id>.made),
+      :field(.<instantiate-field>».made)
+    );
   } else {
     make $<id>.made;
   }

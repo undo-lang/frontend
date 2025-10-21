@@ -1,0 +1,2 @@
+var a = Nothing {};
+var b = Just { value: 1 };
