@@ -87,7 +87,8 @@ role Decl does Line {
 }
 
 class Decl::Variable does Decl {
-  has Name::Unqualified $.name;
+  has Str $.name;
+  has Expression $.init;
 }
 
 class Decl::ImportElement {

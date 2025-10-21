@@ -45,15 +45,14 @@ method import-decl($/) {
 }
 
 method parameters($/) {
-  make $<id>.list.map(-> $id { Parameter_.new(name => $id.made.name) });
+  make $<id>.list.map(-> $id { Parameter_.new(:name($id.made.name)) });
 }
 
 method var-decl($/) {
-  make $<id>».map({ Decl::Variable.new(id => $_) });
+  make $<var>.map({ Decl::Variable.new(:name(~.<id>), :init(.<outer-expr>.made)) });
 }
 
 method enum-variant($/) {
-  # XXX error on `Nothing()`
   my @param = $<param> ?? $<param>».Str !! ();
   make Decl::Enum::Variant.new(
     :name(~$<id>),
@@ -77,7 +76,19 @@ method lines($/) {
 }
 
 method line($/) {
-  make ($<fn-decl> // $<var-decl> // $<import-decl> // $<enum-decl> // $<outer-expr>).made // Empty;
+  with $<fn-decl> {
+    make .made;
+  } orwith $<var-decl> {
+    make (|.made);
+  } orwith $<import-decl> {
+    make .made;
+  } orwith $<enum-decl> {
+    make .made;
+  } orwith $<outer-expr> {
+    make .made;
+  } else {
+    make Empty
+  }
 }
 
 method id($/) {
@@ -94,7 +105,7 @@ method outer-expr($/) {
   for $<call-expr>.skip(1) -> $next {
     my $op = ~$<infix>[$++];
     $val = Expression::Call.new(
-      :fn(Name::Qualified.new(module => ("Prelude",), name => ~$op)),
+      :fn(Name::Qualified.new(:module(("Prelude",)), :name(~$op))),
       :argument(($val, $next.made))
     );
   }
@@ -143,8 +154,12 @@ method inner-expr:match ($/) {
   );
 }
 
-method inner-expr:id ($/) {
-  make $<id>.made;
+method inner-expr:id-or-instantiate ($/) {
+  if $<instantiate> {
+    die "instantiate NYI: '$(~$<instantiate>)'";
+  } else {
+    make $<id>.made;
+  }
 }
 
 method inner-expr:literal ($/) {
@@ -167,12 +182,12 @@ method exprlist($/) {
   make [$<outer-expr>».made];
 }
 
-method literal:sym<num>($/) {
-  make Literal::Num.new(value => $/.Int);
+method literal:sym<num> ($/) {
+  make Literal::Num.new(:value($/.Int));
 }
 
-method literal:sym<str>($/) {
-  make Literal::String.new(value => $<string>.made);
+method literal:sym<str> ($/) {
+  make Literal::String.new(:value($<string>.made));
 }
 
 # -- Section from JSON::Tiny

@@ -36,7 +36,7 @@ rule import-decl {
 }
 
 rule var-decl {
-  <id> + %% ','
+  [$<var>=(<id> [ '=' <outer-expr> ]?)] + %% ','
 }
 
 rule fn-decl {
@@ -129,7 +129,10 @@ rule inner-expr:match {
   '{' ~ '}' [ ['' <match-branch> ''] + %% ',' '' ]
 }
 
-token inner-expr:id { <id> }
+token inner-expr:id-or-instantiate {
+    <id>
+    [ $<instantiate>='{' ~ '}' [<.ws> <field> <.ws>] * %% ',' <.ws> ]?
+}
 token inner-expr:literal { <literal> }
 token inner-expr:parens {
   '(' ~ ')' <outer-expr>
@@ -137,6 +140,12 @@ token inner-expr:parens {
 
 token exprlist {
   <outer-expr>* %% ','
+}
+
+token field {
+    <id> <.ws>
+    ':' <.ws>
+    <expr=.outer-expr>
 }
 
 # literal stuff
