@@ -1,0 +1,17 @@
+enum Maybe {
+  Just(value),
+  Nothing,
+};
+
+fn open(x, default) {
+   match x {
+     Just(value: inner) => {inner;},
+     Nothing => {default;}
+   };
+};
+
+var a = Nothing {};
+var b = Just { value: 1 };
+
+print(open(a, "empty"));
+print(open(b, "empty"));

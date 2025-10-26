@@ -129,9 +129,12 @@ method inner-expr:loop ($/) {
 
 method match-subject($/) {
   if ~$<field> {
+    my %sub = $<sub>.map({
+      ~.<id> => .<match-subject>.made
+    });
     make Expression::MatchSubject::Constructor.new(
       :constructor($<id>.made.name),
-      :sub($<match-subject>».made)
+      :%sub
     );
   } else {
     make Expression::MatchSubject::Variable.new(

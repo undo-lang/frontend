@@ -114,8 +114,12 @@ rule match-subject {
   <id>
   $<field>=[
     '(' ~ ')'
-    ['' <match-subject> ''] * %% ',' ''
+    [ $<sub>=(<id> ':' <match-subject>) ''] * %% ','
   ]?
+}
+
+method die ($msg) {
+  die "Parse error: $msg"; # TODO pos
 }
 
 rule match-branch {
@@ -125,15 +129,19 @@ rule match-branch {
 }
 rule inner-expr:match {
   'match' <topic=.outer-expr>
-  '{' ~ '}' [ ['' <match-branch> ''] + %% ',' '' ]
+  '{' ~ '}'
+  [
+    ['' <match-branch> ''] + %% ',' ''
+    [ <.id> <.die: "Unexpected variant name, are you missing a comma?"> ]?
+  ]
 }
 
 token inner-expr:id-or-instantiate {
-    <id>
-    $<instantiate>=( <.ws>
-        '{' ~ '}'
-        [<.ws> <instantiate-field> <.ws>] * %% ',' <.ws>
-    )?
+  <id>
+  $<instantiate>=( <.ws>
+    '{' ~ '}'
+    [<.ws> <instantiate-field> <.ws>] * %% ',' <.ws>
+  )?
 }
 token inner-expr:literal { <literal> }
 token inner-expr:parens {

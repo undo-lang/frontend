@@ -79,7 +79,7 @@ class Expression::MatchSubject::Variable does Expression::MatchSubject {
 
 class Expression::MatchSubject::Constructor does Expression::MatchSubject {
   has Str $.constructor;
-  has Expression::MatchSubject @.sub;
+  has Expression::MatchSubject %.sub;
 }
 
 class Expression::MatchBranch {
