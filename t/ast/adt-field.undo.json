@@ -1,0 +1,84 @@
+{
+  "type": "Block",
+  "body": [
+    {
+      "name": "Maybe",
+      "variant": [
+        {
+          "parameter": [
+            "value"
+          ],
+          "type": "Variant",
+          "name": "Just"
+        },
+        {
+          "parameter": [
+          ],
+          "type": "Variant",
+          "name": "Nothing"
+        }
+      ],
+      "type": "Enum"
+    },
+    {
+      "name": "a",
+      "init": {
+        "name": {
+          "name": "Just",
+          "type": "Unqualified"
+        },
+        "type": "Instantiate",
+        "field": {
+          "value": {
+            "field": {
+              "value": {
+                "type": "Instantiate",
+                "name": {
+                  "type": "Unqualified",
+                  "name": "Just"
+                },
+                "field": {
+                  "value": {
+                    "value": 1,
+                    "type": "Num"
+                  }
+                }
+              }
+            },
+            "name": {
+              "name": "Just",
+              "type": "Unqualified"
+            },
+            "type": "Instantiate"
+          }
+        }
+      },
+      "type": "Variable"
+    },
+    {
+      "argument": [
+        {
+          "type": "Field",
+          "field": "value",
+          "object": {
+            "object": {
+              "type": "Field",
+              "field": "value",
+              "object": {
+                "type": "Unqualified",
+                "name": "a"
+              }
+            },
+            "field": "value",
+            "type": "Field"
+          }
+        }
+      ],
+      "type": "Call",
+      "fn": {
+        "type": "Unqualified",
+        "name": "print"
+      }
+    }
+  ]
+}

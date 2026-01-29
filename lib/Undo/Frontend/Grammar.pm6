@@ -92,11 +92,14 @@ token infix {
   || @infix-operators
 }
 
-rule outer-expr { ['' <call-expr> '']+ % <infix> }
+rule outer-expr { ['' <postfix-expr> '']+ % <infix> }
 
-regex call-expr {
+regex postfix-expr {
   <inner-expr>
-  [ '(' ~ ')' <exprlist> ]*
+  $<postfix>=(
+  | '(' ~ ')' <call=.exprlist>
+  | '.' <field=.id>
+  )*
 }
 
 proto regex inner-expr { * }

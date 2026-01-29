@@ -1,0 +1,7 @@
+enum Maybe {
+  Just(value),
+  Nothing,
+};
+
+var a = Just { value: Just { value: Just { value: 1 } } };
+print(a.value.value.value);

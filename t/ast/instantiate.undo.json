@@ -1,39 +1,35 @@
 {
+  "type": "Block",
   "body": [
     {
-      "name": "a",
+      "type": "Variable",
       "init": {
-        "field": [
-        ],
-        "name": {
-          "name": "Nothing",
-          "type": "Unqualified"
-        },
-        "type": "Instantiate"
-      },
-      "type": "Variable"
-    },
-    {
-      "name": "b",
-      "init": {
-        "field": [
-          {
-            "field": "value",
-            "type": "InstantiateField",
-            "value": {
-              "type": "Num",
-              "value": 1
-            }
-          }
-        ],
         "name": {
           "type": "Unqualified",
-          "name": "Just"
+          "name": "Nothing"
+        },
+        "field": {
         },
         "type": "Instantiate"
       },
+      "name": "a"
+    },
+    {
+      "init": {
+        "type": "Instantiate",
+        "name": {
+          "name": "Just",
+          "type": "Unqualified"
+        },
+        "field": {
+          "value": {
+            "value": 1,
+            "type": "Num"
+          }
+        }
+      },
+      "name": "b",
       "type": "Variable"
     }
-  ],
-  "type": "Block"
+  ]
 }

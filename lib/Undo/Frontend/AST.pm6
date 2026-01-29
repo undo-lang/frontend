@@ -49,6 +49,11 @@ class Expression::Call does Expression {
   has Expression @.argument;
 }
 
+class Expression::Field does Expression {
+  has Expression $.object;
+  has Str $.field;
+}
+
 class Expression::Conditional does Expression {
   has Expression $.condition; # TODO use something else?
   has Block_ $.then;
@@ -60,14 +65,14 @@ class Expression::Loop does Expression {
   has Block_ $.block;
 }
 
-class Expression::InstantiateField {
-  has Str $.field;
-  has Expression $.value;
-}
+#class Expression::InstantiateField {
+#  has Str $.field;
+#  has Expression $.value;
+#}
 
 class Expression::Instantiate does Expression {
   has Name $.name;
-  has Expression::InstantiateField @.field;
+  has Expression %.field;
 }
 
 role Expression::MatchSubject {

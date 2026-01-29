@@ -101,8 +101,8 @@ method outer-expr($/) {
   # TODO precedence
   # !!!!
 
-  my $val = $<call-expr>[0].made;
-  for $<call-expr>.skip(1) -> $next {
+  my $val = $<postfix-expr>[0].made;
+  for $<postfix-expr>.skip(1) -> $next {
     my $op = ~$<infix>[$++];
     $val = Expression::Call.new(
       :fn(Name::Qualified.new(:module(("Prelude",)), :name(~$op))),
@@ -158,17 +158,18 @@ method inner-expr:match ($/) {
 }
 
 method instantiate-field($/) {
-  make Expression::InstantiateField.new(
-    :field(~$<id>),
-    :value($<expr>.made),
-  )
+  make ~$<id> => $<expr>.made;
+  #  make Expression::InstantiateField.new(
+  #    :field(~$<id>),
+  #    :value($<expr>.made),
+  #  )
 }
 
 method inner-expr:id-or-instantiate ($/) {
   with $<instantiate> {
     make Expression::Instantiate.new(
       :name($<id>.made),
-      :field(.<instantiate-field>».made)
+      :field(%(.<instantiate-field>».made))
     );
   } else {
     make $<id>.made;
@@ -183,11 +184,16 @@ method inner-expr:parens ($/) {
   make $<outer-expr>.made;
 }
 
-method call-expr($/) {
+method postfix-expr($/) {
   my $start = $<inner-expr>.made;
-  my @calls = $<exprlist>».made;
-  make ($start, |@calls).reduce(-> $fn, @argument {
-    Expression::Call.new(:$fn, :@argument);
+  make ($start, |$<postfix>).reduce(-> $lhs, $postfix {
+    with $postfix<call> {
+      Expression::Call.new(:fn($lhs), :argument(.made));
+    } orwith $postfix<field> {
+      Expression::Field.new(:object($lhs), :field(~$_));
+    } else {
+      die "Unrecognized postfix $postfix";
+    }
   });
 }
 

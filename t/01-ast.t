@@ -13,7 +13,16 @@ sub run-code {
 for dir('t/ast') { # TODO base on current dir
   next unless /'.undo'$/;
   my $expected = $_ ~ '.json';
-  my %serialized = run-code(.slurp);
+  my %serialized;
+  try {
+    %serialized = run-code(.slurp);
+    CATCH {
+      default {
+        flunk "could not parse/run $expected: $_";
+      }
+    }
+  }
+  %serialized or next;
 
   unless $expected.IO.e {
     skip "No expected AST for $_ (missing $expected), here's the expected json:\n{to-json %serialized}";
